@@ -1,5 +1,5 @@
 # Install PM2
-A script that creates an ecosystem.config.js file in home, my-backend,and my-frontend for Strapi and Gatsby to start both processes.
+PM2 is a process manager built on node that allows you to launch, stop, restart processes in this case it creates an ecosystem.config.js file in the home, my-backend,and my-frontend for Strapi and Gatsby to start both processes.
 
 ```
 sudo apt upgrade -y && sudo apt update -y && sudo apt autoremove -y &&
