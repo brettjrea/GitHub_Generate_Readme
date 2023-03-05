@@ -7,9 +7,10 @@
 ---
 *You will need node.*
 
-* [Install NVM](https://github.com/brettjrea/Debian_Install_NVM)
+*[Install NVM](https://github.com/brettjrea/Debian_Install_NVM)*
 
-* [Install NVS](https://github.com/brettjrea/Debian_Install_NVS)
+*[Install NVS](https://github.com/brettjrea/Debian_Install_NVS)*
+
 *Added 02/23 it is a cross-platform node based successor/replacement for NVM.*
 ---
 
