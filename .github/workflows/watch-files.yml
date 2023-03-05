@@ -11,14 +11,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Debug
-        run: echo ${{ github.event.head_commit.modified }}
-      - name: Trigger Single Repository
-        if: github.event_name == 'push' && contains(github.event.head_commit.modified, 'configure-pm2.md')
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          repository: brettjrea/Debian_Configure_PM2
-          event-type: file-changed
-          client-payload: '{ "message": "configure-pm2.md changed" }'
-          
+     - name: Debug
+       env:
+         MODIFIED: ${{ toJson(github.event.head_commit.modified) }}
+       run: echo $MODIFIED
+
+     - name: Trigger Single Repository
+       if: github.event_name == 'push' && contains(github.event.head_commit.modified, 'configure-pm2.md')
+       uses: peter-evans/repository-dispatch@v2
+       with:
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        repository: brettjrea/Debian_Configure_PM2
+        event-type: file-changed
+        client-payload: '{ "message": "configure-pm2.md changed" }'
+
