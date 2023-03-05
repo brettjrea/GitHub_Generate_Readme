@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Action
-        uses: peter-evans/repository-dispatch@v2.1.1
+        uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: Debian_Configure_PM2
