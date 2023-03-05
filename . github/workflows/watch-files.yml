@@ -1,0 +1,19 @@
+name: Watch Files
+
+on:
+  push:
+    paths:
+      - 'configure-pm2.md'
+      - 'table-of-contents.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Action
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: Debian_Configure_PM2
+          event-type: file-changed
+          client-payload: '{ "message": "File(s) changed" }'
