@@ -1,4 +1,4 @@
-*Optional:*
+*Optional upgrade OS:*
 
 *[Upgrade Debian Bullseye to Buster](https://github.com/brettjrea/Debian_Bullseye_Upgrade_Script)*
 
