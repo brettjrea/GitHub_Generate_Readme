@@ -15,6 +15,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          repository: brettjrea/Debian_Configure_PM2, brettjrea/Debian_Bullseye_Upgrade_Script
+          repositories: brettjrea/Debian_Configure_PM2, brettjrea/Debian_Bullseye_Upgrade_Script
           event-type: file-changed
           client-payload: '{ "message": "File(s) changed" }'
