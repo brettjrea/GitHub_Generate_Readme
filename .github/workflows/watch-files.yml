@@ -5,34 +5,15 @@ on:
     paths:
       - 'configure-pm2.md'
       - 'table-of-contents.md'
-      - 'debian-bullseye-upgrade-script.md'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger All Repositories
-        if: github.event_name == 'push' && contains(github.event.head_commit.modified, 'table-of-contents.md')
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          repository: brettjrea/Debian_Table_Of_Contents,brettjrea/Debian_Configure_PM2,brettjrea/Debian_Bullseye_Upgrade_Script
-          event-type: file-changed
-          client-payload: '{ "message": "File(s) changed" }'
-      - name: Trigger Single Repository
-        if: github.event_name == 'push' && contains(github.event.head_commit.modified, 'debian-bullseye-upgrade-script.md')
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          repository: brettjrea/Debian_Configure_PM2
-          event-type: file-changed
-          client-payload: '{ "message": "File(s) changed" }'   
-      - name: Trigger Single Repository
-        if: github.event_name == 'push' && contains(github.event.head_commit.modified, 'configure-pm2.md')
+      - name: Trigger Action
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: brettjrea/Debian_Configure_PM2
           event-type: file-changed
           client-payload: '{ "message": "File(s) changed" }'
-
