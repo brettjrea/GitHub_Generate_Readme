@@ -28,8 +28,3 @@ This will start all processes defined in the ecosystem.config.js file. If you wa
 ```
 pm2 start ecosystem.config.js --name <process name>
 ```
----
-
-
-
-
