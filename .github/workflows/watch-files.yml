@@ -14,6 +14,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          repository: Debian_Configure_PM2
+          repository: brettjrea/Debian_Configure_PM2
           event-type: file-changed
           client-payload: '{ "message": "File(s) changed" }'
