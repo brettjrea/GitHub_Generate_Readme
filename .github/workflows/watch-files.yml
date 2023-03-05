@@ -18,7 +18,7 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: brettjrea/Debian_Table_Of_Contents,brettjrea/Debian_Configure_PM2,brettjrea/Debian_Bullseye_Upgrade_Script
           event-type: file-changed
-          client-payload: '{ "message": "table-of-contents.md changed" }'
+          client-payload: '{ "message": "File(s) changed" }'
       - name: Trigger Single Repository
         if: github.event_name == 'push' && contains(github.event.head_commit.modified, 'debian-bullseye-upgrade-script.md')
         uses: peter-evans/repository-dispatch@v2
@@ -26,7 +26,7 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: brettjrea/Debian_Configure_PM2
           event-type: file-changed
-          client-payload: '{ "message": "debian-bullseye-upgrade-script.md changed" }'   
+          client-payload: '{ "message": "File(s) changed" }'   
       - name: Trigger Single Repository
         if: github.event_name == 'push' && contains(github.event.head_commit.modified, 'configure-pm2.md')
         uses: peter-evans/repository-dispatch@v2
@@ -34,5 +34,5 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: brettjrea/Debian_Configure_PM2
           event-type: file-changed
-          client-payload: '{ "message": "configure-pm2.md changed" }'
+          client-payload: '{ "message": "File(s) changed" }'
 
