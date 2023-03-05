@@ -5,7 +5,6 @@ on:
     paths:
       - 'configure-pm2.md'
       - 'table-of-contents.md'
-      - 'debian-bullseye-upgrade-script.md'
 
 jobs:
   build:
