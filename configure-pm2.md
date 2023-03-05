@@ -1,7 +1,9 @@
 ### Install PM2
 ---
 
-PM2 is a process manager built on node that allows you to launch, stop, restart processes in this case it creates an ecosystem.config.js file in the home, my-backend,and my-frontend for Strapi and Gatsby to start both processes.
+PM2 is a process manager built on Node.js that makes it easy to launch, stop, and restart processes on your server. In this case, we will use it to create an ecosystem.config.js file in the home, my-backend, and my-frontend directories for Strapi and Gatsby, which allows you to start both processes with a single command.
+
+To install PM2 and configure the ecosystem file, run the following commands:
 
 ```
 sudo apt upgrade -y && sudo apt update -y && sudo apt autoremove -y &&
@@ -16,9 +18,19 @@ sudo apt clean -y
 pm2 start ecosystem.config.js
 ```
 
-
-### To start any process in the ecosystem.config.js file.
+Once PM2 is installed and the ecosystem file is configured, you can start any process in the ecosystem.config.js file by running the following command:
 
 ```
 pm2 start ecosystem.config.js
 ```
+
+This will start all processes defined in the ecosystem.config.js file. If you want to start a specific process, you can use the process name specified in the ecosystem file like this:
+
+```
+pm2 start ecosystem.config.js --name <process name>
+```
+
+
+
+
+
