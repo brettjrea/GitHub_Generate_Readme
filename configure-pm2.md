@@ -15,7 +15,6 @@ sudo bash fixscripts.sh &&
 bash configure-pm2.sh && 
 sudo apt autoremove -y &&
 sudo apt clean -y
-pm2 start ecosystem.config.js
 ```
 
 Once PM2 is installed and the ecosystem file is configured, you can start any process in the ecosystem.config.js file by running the following command:
