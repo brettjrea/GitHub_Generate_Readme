@@ -1,6 +1,6 @@
 ### Upgrade Debian Buster to Bullseye with upgrade.sh
 
-Verified still working 2022 but needed to manually install wget
+This markdown provides a quick and easy script to upgrade a Debian Buster operating system to Bullseye. The script has been verified as still working in 2022, although it may require the manual installation of wget.
 
 ### Quickscript:
 
