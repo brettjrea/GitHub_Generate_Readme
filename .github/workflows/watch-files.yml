@@ -6,9 +6,12 @@ on:
       - 'table-of-contents.md'
       - 'debian-bullseye-upgrade-script.md'
       - 'ubuntu-jammy-upgrade-script.md'
-      - 'configure-pm2.md'
       - 'debian-install-nvm.md'
       - 'debian-install-nvs.md'
+      - 'debian-install-common-build-tools.md'
+      - 'debian-strapi-backend-api.md'
+      - 'gatsby-typescript-styled-components.md'
+      - 'configure-pm2.md'
 
 jobs:
   build:
@@ -25,7 +28,7 @@ jobs:
         token: ${{ secrets.REPO_ACCESS_TOKEN }}
         repository: brettjrea/Debian_Bullseye_Upgrade_Script
         event-type: file-changed
-        client-payload: '{ "message": "configure-pm2.md changed" }' 
+        client-payload: '{ "message": "debian-bullseye-upgrade-script.md changed" }' 
      
      - name: Trigger Single Repository
        uses: peter-evans/repository-dispatch@v2
@@ -33,7 +36,7 @@ jobs:
         token: ${{ secrets.REPO_ACCESS_TOKEN }}
         repository: brettjrea/Ubuntu_Jammy_Upgrade_Script
         event-type: file-changed
-        client-payload: '{ "message": "configure-pm2.md changed" }'
+        client-payload: '{ "message": "ubuntu-jammy-upgrade-script.md changed" }'
         
      - name: Trigger Single Repository
        uses: peter-evans/repository-dispatch@v2
@@ -41,7 +44,7 @@ jobs:
         token: ${{ secrets.REPO_ACCESS_TOKEN }}
         repository: brettjrea/Debian_Install_NVM
         event-type: file-changed
-        client-payload: '{ "message": "configure-pm2.md changed" }'  
+        client-payload: '{ "message": "debian-install-nvm.md changed" }'  
         
      - name: Trigger Single Repository
        uses: peter-evans/repository-dispatch@v2
@@ -49,7 +52,31 @@ jobs:
         token: ${{ secrets.REPO_ACCESS_TOKEN }}
         repository: brettjrea/Debian_Install_NVS
         event-type: file-changed
-        client-payload: '{ "message": "configure-pm2.md changed" }'       
+        client-payload: '{ "message": "debian-install-nvs.md changed" }'
+        
+     - name: Trigger Single Repository
+       uses: peter-evans/repository-dispatch@v2
+       with:
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        repository: brettjrea/Debian_Install_Common_Build_Tools
+        event-type: file-changed
+        client-payload: '{ "message": "debian-install-common-build-tools.md changed" }'
+        
+     - name: Trigger Single Repository
+       uses: peter-evans/repository-dispatch@v2
+       with:
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        repository: brettjrea/Debian_Strapi_Backend_API
+        event-type: file-changed
+        client-payload: '{ "message": "debian-strapi-backend-api.md changed" }'
+      
+     - name: Trigger Single Repository
+       uses: peter-evans/repository-dispatch@v2
+       with:
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        repository: brettjrea/Gatsby_Typescript_Styled_Components
+        event-type: file-changed
+        client-payload: '{ "message": "gatsby-typescript-styled-components.md changed" }' 
 
      - name: Trigger Single Repository
        uses: peter-evans/repository-dispatch@v2
