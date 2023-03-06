@@ -1,6 +1,6 @@
 ### Debian Strapi Backend API
 
-### This new one fetches a script from this repo which is useful for using inside of another script.
+#### This new one fetches a script from this repo which is useful for using inside of another script.
 
 ```
 sudo apt upgrade -y && sudo apt update -y && sudo apt autoremove -y &&
