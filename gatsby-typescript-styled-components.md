@@ -14,7 +14,7 @@ cd my-frontend &&
 yarn add styled-components gatsby-plugin-styled-components babel-plugin-styled-components &&
 yarn add -D @types/styled-components &&
 yarn add gatsby-plugin-react-helmet-async react-helmet-async &&
-yarn add gatsby-source-strapi &&
+yarn add gatsby-source-strapi
 ```
 ```
 cd my-frontend && yarn deploy
