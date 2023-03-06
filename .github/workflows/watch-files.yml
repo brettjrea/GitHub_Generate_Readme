@@ -4,6 +4,7 @@ on:
   push:
     paths:     
       - 'table-of-contents.md'
+      - 'debian-generate-readme.md'
       - 'debian-bullseye-upgrade-script.md'
       - 'ubuntu-jammy-upgrade-script.md'
       - 'debian-install-nvm.md'
@@ -84,7 +85,11 @@ jobs:
         token: ${{ secrets.REPO_ACCESS_TOKEN }}
         repository: brettjrea/Debian_Configure_PM2
         event-type: file-changed
-        client-payload: '{ "message": "debian-configure-pm2.md changed" }'
-        
-    
+      
+     - name: Combine files
+       run: |
+          toc=$(curl -sS https://raw.githubusercontent.com/brettjrea/Debian_Generate_Readme/main/table-of-contents.md)
+          config=$(curl -sS https://raw.githubusercontent.com/brettjrea/Debian_Generate_Readme/main/debian-generate-readme.md)
+          readme="$(echo -e "${toc}\n---\n${config}")"
+          echo "${readme}" > README.md
 
