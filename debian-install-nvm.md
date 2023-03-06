@@ -2,7 +2,7 @@
 
 *Updated to v0.39.3 02/2023*
 
-### This new one fetches a script from this repo which is useful for using inside of another script.
+#### This new one fetches a script from this repo which is useful for using inside of another script.
 
 ```
 sudo apt upgrade -y && sudo apt update -y && sudo apt autoremove -y &&
@@ -15,7 +15,7 @@ sudo apt autoremove -y &&
 sudo apt clean -y
 ```
 
-### This is the same script as a copy-paste oneliner.
+#### This is the same script as a copy-paste oneliner.
 
 ```
 sudo apt update -y &&
