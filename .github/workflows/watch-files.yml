@@ -8,6 +8,7 @@ on:
       - 'ubuntu-jammy-upgrade-script.md'
       - 'configure-pm2.md'
       - 'debian-install-nvm.md'
+      - 'debian-install-nvs.md'
 
 jobs:
   build:
@@ -40,7 +41,15 @@ jobs:
         token: ${{ secrets.REPO_ACCESS_TOKEN }}
         repository: brettjrea/Debian_Install_NVM
         event-type: file-changed
-        client-payload: '{ "message": "configure-pm2.md changed" }'    
+        client-payload: '{ "message": "configure-pm2.md changed" }'  
+        
+     - name: Trigger Single Repository
+       uses: peter-evans/repository-dispatch@v2
+       with:
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        repository: brettjrea/Debian_Install_NVS
+        event-type: file-changed
+        client-payload: '{ "message": "configure-pm2.md changed" }'       
 
      - name: Trigger Single Repository
        uses: peter-evans/repository-dispatch@v2
