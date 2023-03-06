@@ -11,7 +11,7 @@ on:
       - 'debian-install-common-build-tools.md'
       - 'debian-strapi-backend-api.md'
       - 'gatsby-typescript-styled-components.md'
-      - 'configure-pm2.md'
+      - 'debian-configure-pm2.md'
 
 jobs:
   build:
@@ -84,7 +84,7 @@ jobs:
         token: ${{ secrets.REPO_ACCESS_TOKEN }}
         repository: brettjrea/Debian_Configure_PM2
         event-type: file-changed
-        client-payload: '{ "message": "configure-pm2.md changed" }'
+        client-payload: '{ "message": "debian-configure-pm2.md changed" }'
         
     
 
