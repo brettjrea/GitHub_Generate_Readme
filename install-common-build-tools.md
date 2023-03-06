@@ -1,3 +1,6 @@
+### Common Build Tools
+
+This is a script to install common build tools on Debian-based systems using the install-tools.sh script. To use the script, copy and paste the following commands into your terminal:
 
 ```
 sudo apt upgrade -y && sudo apt update -y && sudo apt autoremove -y &&
@@ -9,16 +12,3 @@ chmod +x install-tools.sh &&
 sudo apt autoremove -y &&
 sudo apt clean -y
 ```
-
----
-
-### Possible Backends
-*You might now want to [install Strapi.io](https://github.com/brettjrea/Debian_Strapi_Backend_API) backend*
-
----
-
-### Possible Frontends
-
-*You might now want to [install a Gatsby.js w/ Styled-Components.](https://github.com/brettjrea/Gatsby_Typescript_Styled_Components) frontend*
-
-*You might now want to [install a Gatsby.js w/ Emotion and TailwindCSS.](https://github.com/brettjrea/Gatsby_Typescript_Emotion_TailwindCSS) frontend*
