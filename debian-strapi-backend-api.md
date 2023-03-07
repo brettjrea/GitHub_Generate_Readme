@@ -18,7 +18,7 @@ cd ~/my-backend && yarn deploy
 ```
 I seperated the command to start development because I am using PM2 from the link above. ☝️ 
 
-#### This is a copy-paste for those who dont want to use a script. 
+#### This is a copy-paste of the commands for those who dont want to use a script. 
 
 ```
 sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y &&
