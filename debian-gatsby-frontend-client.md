@@ -1,7 +1,25 @@
 ### Debian Gatsby Frontend Client
 
-#### Install with Yarn: 
-*Originally wrote with NPM but had too many issues with the cache, but yarn worked fine. Moved those instructions to README_NPM.MD*
+#### This new one fetches a script from this repo which is useful for using inside of another script.
+
+```
+sudo apt upgrade -y && sudo apt update -y && sudo apt autoremove -y &&
+sudo apt install wget &&
+sudo apt-get install --reinstall ca-certificates -y &&
+wget https://raw.githubusercontent.com/brettjrea/Debian_Gatsby_Frontend_Client/main/install-gatsby.sh &&
+chmod +x install-gatsby.sh &&
+./install-gatsby.sh &&
+sudo apt autoremove -y &&
+sudo apt clean -y
+```
+
+```
+cd ~/my-frontend && yarn deploy
+```
+
+I seperated the command to start development because I am using PM2 from the link above. ☝️ 
+
+#### This is a copy-paste of the commands for those who dont want to use a script.
 ```
 sudo apt upgrade -y && sudo apt update -y && sudo apt autoremove -y &&
 npm install --global yarn &&
@@ -21,4 +39,3 @@ yarn add gatsby-source-custom-api
 ```
 cd my-frontend && yarn deploy
 ```
-I seperated the command to start development because I am using PM2 from the link above. ☝️
