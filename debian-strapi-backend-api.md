@@ -36,3 +36,7 @@ pm2 delete all &&
 yarn add strapi-plugin-init-admin-user &&
 echo "INIT_ADMIN_USERNAME=admin\nINIT_ADMIN_PASSWORD=admin\nINIT_ADMIN_FIRSTNAME=Admin\nINIT_ADMIN_LASTNAME=Admin\nINIT_ADMIN_EMAIL=admin@init-strapi-admin.strapi.io" >> .env
 ```
+
+```
+cd ~/my-backend && yarn deploy
+```
