@@ -13,5 +13,5 @@
    
 4. Frontends, Backends, and Process Manager:
    1. [Install Strapi.io backend](https://github.com/brettjrea/Debian_Strapi_Backend_API)
-   2. [Install Gatsby frontend](https://github.com/brettjrea/Gatsby_Typescript_Styled_Components)
+   2. [Install Gatsby frontend](https://github.com/brettjrea/Debian_Gatsby_Frontend_Client)
    3. [Install PM2 Process](https://github.com/brettjrea/Debian_Configure_PM2)
