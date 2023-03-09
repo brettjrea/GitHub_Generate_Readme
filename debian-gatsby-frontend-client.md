@@ -1,4 +1,4 @@
-### Gatsby Typescript Styled Components
+### Debian Gatsby Frontend Client
 
 #### Install with Yarn: 
 *Originally wrote with NPM but had too many issues with the cache, but yarn worked fine. Moved those instructions to README_NPM.MD*
