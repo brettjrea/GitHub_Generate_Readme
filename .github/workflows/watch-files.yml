@@ -70,6 +70,14 @@ jobs:
         repository: brettjrea/Debian_Strapi_Backend_API
         event-type: file-changed
         client-payload: '{ "message": "debian-strapi-backend-api.md changed" }'
+        
+     - name: Trigger Single Repository
+       uses: peter-evans/repository-dispatch@v2
+       with:
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        repository: brettjrea/Debian_Gatsby_Frontend_Client
+        event-type: file-changed
+        client-payload: '{ "message": "debian-gatsby-frontend-client.md changed" }'
       
      - name: Trigger Single Repository
        uses: peter-evans/repository-dispatch@v2
