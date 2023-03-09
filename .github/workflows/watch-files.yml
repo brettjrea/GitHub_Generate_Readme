@@ -11,6 +11,7 @@ on:
       - 'debian-install-nvs.md'
       - 'debian-install-common-build-tools.md'
       - 'debian-strapi-backend-api.md'
+      - 'debian-gatsby-frontend-client.md'
       - 'gatsby-typescript-styled-components.md'
       - 'debian-configure-pm2.md'
 
