@@ -15,4 +15,4 @@
    1. [Install Strapi.io backend](https://github.com/brettjrea/Debian_Strapi_Backend_API)
    2. [Install Gatsby frontend](https://github.com/brettjrea/Debian_Gatsby_Frontend_Client)
    3. [Install PM2 Process](https://github.com/brettjrea/Debian_Configure_PM2)
-   4. [Install PM2 Process](https://github.com/brettjrea/Debian_Install_GitHub_CLI)
+   4. [Install GitHub CLI](https://github.com/brettjrea/Debian_Install_GitHub_CLI)
