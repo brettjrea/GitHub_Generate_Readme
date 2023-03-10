@@ -60,5 +60,6 @@ gh workflow list: List the workflows in the current repository.
 gh workflow view <name>: View details of a workflow in the current repository.
 
 gh workflow run <name> [--ref=<ref>]: Manually trigger a workflow in the current repository with optional ref.
+ 
 ---
 This is not an exhaustive list of all available commands, but these are some of the most commonly used ones. You can get a full list of commands and their descriptions by running gh help.
