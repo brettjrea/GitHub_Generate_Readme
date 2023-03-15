@@ -113,21 +113,7 @@ jobs:
         token: ${{ secrets.REPO_ACCESS_TOKEN }}
         repository: brettjrea/Windows_WSL_Debian
         event-type: file-changed
-        client-payload: '{ "message":"windows-install-wsl.md changed" }'  
+        client-payload: '{ "message":"windows-install-wsl.md changed" }'
     
-    
-     - name: Checkout code
-       uses: actions/checkout@v2
 
-     - name: Combine files
-       run: |
-          toc=$(curl -sS https://raw.githubusercontent.com/brettjrea/GitHub_Generate_Readme/main/readme/generate-readme-table-of-contents.md)
-          config=$(curl -sS https://raw.githubusercontent.com/brettjrea/GitHub_Generate_Readme/main/readme/debian-generate-readme.md)
-          readme="$(echo -e "${toc}\n---\n${config}")"
-          echo "${readme}" > README.md
-      
-     - name: Auto commit
-       uses: stefanzweifel/git-auto-commit-action@v4
-       with:
-          commit_message: 'Auto commit updated README.md'
 
