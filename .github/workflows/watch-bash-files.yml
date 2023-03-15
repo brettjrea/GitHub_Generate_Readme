@@ -1,0 +1,24 @@
+name: Watch Bash Files
+
+on:
+ workflow_dispatch:
+ push:
+    paths:     
+      - 'bash/debian-bullseye-upgrade-script.sh'
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Debug
+       env:
+         MODIFIED: ${{ toJson(github.event.head_commit.modified) }}
+       run: echo $MODIFIED
+       
+     - name: Trigger Single Repository
+       uses: peter-evans/repository-dispatch@v2
+       with:
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        repository: brettjrea/Debian_Bullseye_Upgrade_Script
+        event-type: file-changed
+        client-payload: '{ "message":"debian-bullseye-upgrade-script.sh changed" }'
