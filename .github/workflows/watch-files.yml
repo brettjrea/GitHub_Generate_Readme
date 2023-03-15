@@ -1,7 +1,8 @@
 name: Watch Files
 
 on:
-  push:
+ workflow_dispatch:
+ push:
     paths:     
       - 'table-of-contents.md'
       - 'debian-generate-readme.md'
