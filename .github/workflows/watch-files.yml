@@ -16,7 +16,7 @@ on:
       - 'gatsby-typescript-styled-components.md'
       - 'debian-configure-pm2.md'
       - 'debian-install-github-cli.md'
-      - 'windows-install-wsl.md
+      - 'windows-install-wsl.md'
 
 jobs:
   build:
