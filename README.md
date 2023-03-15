@@ -11,11 +11,11 @@
 3. Build tools:
    1. [Install common build tools.](https://github.com/brettjrea/Debian_Install_Common_Build_Tools)
    
-4. Frontends, Backends, and Process Manager:
+4. Frontends, Backends, Process Manager and GitHub CLI:
    1. [Install Strapi.io backend](https://github.com/brettjrea/Debian_Strapi_Backend_API)
    2. [Install Gatsby frontend](https://github.com/brettjrea/Debian_Gatsby_Frontend_Client)
    3. [Install PM2 Process](https://github.com/brettjrea/Debian_Configure_PM2)
-   4. [Install PM2 Process](https://github.com/brettjrea/Debian_Install_GitHub_CLI)
+   4. [Install GitHub CLI](https://github.com/brettjrea/Debian_Install_GitHub_CLI)
 ---
 ### Debian Generate Readme
 
