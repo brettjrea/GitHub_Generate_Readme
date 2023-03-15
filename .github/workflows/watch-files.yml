@@ -16,6 +16,7 @@ on:
       - 'gatsby-typescript-styled-components.md'
       - 'debian-configure-pm2.md'
       - 'debian-install-github-cli.md'
+      - 'windows-install-wsl.md
 
 jobs:
   build:
@@ -105,6 +106,14 @@ jobs:
         repository: brettjrea/Debian_Install_GitHub_CLI
         event-type: file-changed
         client-payload: '{ "message":"debian-install-github-cli.md changed" }'
+        
+     - name: Trigger Single Repository
+       uses: peter-evans/repository-dispatch@v2
+       with:
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        repository: brettjrea/Windows_WSL_Debian
+        event-type: file-changed
+        client-payload: '{ "message":"windows-install-wsl.md changed" }'  
     
     
      - name: Checkout code
