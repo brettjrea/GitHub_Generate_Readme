@@ -4,7 +4,7 @@ on:
  workflow_dispatch:
  push:
     paths:     
-      - 'readme/table-of-contents.md'
+      - 'readme/generate-readme-table-of-contents.md'
       - 'readme/debian-generate-readme.md'
       - 'readme/debian-bullseye-upgrade-script.md'
       - 'readme/ubuntu-jammy-upgrade-script.md'
