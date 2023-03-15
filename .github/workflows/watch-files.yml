@@ -4,19 +4,19 @@ on:
  workflow_dispatch:
  push:
     paths:     
-      - 'table-of-contents.md'
-      - 'debian-generate-readme.md'
-      - 'debian-bullseye-upgrade-script.md'
-      - 'ubuntu-jammy-upgrade-script.md'
-      - 'debian-install-nvm.md'
-      - 'debian-install-nvs.md'
-      - 'debian-install-common-build-tools.md'
-      - 'debian-strapi-backend-api.md'
-      - 'debian-gatsby-frontend-client.md'
-      - 'gatsby-typescript-styled-components.md'
-      - 'debian-configure-pm2.md'
-      - 'debian-install-github-cli.md'
-      - 'windows-install-wsl.md'
+      - 'readme/table-of-contents.md'
+      - 'readme/debian-generate-readme.md'
+      - 'readme/debian-bullseye-upgrade-script.md'
+      - 'readme/ubuntu-jammy-upgrade-script.md'
+      - 'readme/debian-install-nvm.md'
+      - 'readme/debian-install-nvs.md'
+      - 'readme/debian-install-common-build-tools.md'
+      - 'readme/debian-strapi-backend-api.md'
+      - 'readme/debian-gatsby-frontend-client.md'
+      - 'readme/gatsby-typescript-styled-components.md'
+      - 'readme/debian-configure-pm2.md'
+      - 'readme/debian-install-github-cli.md'
+      - 'readme/windows-install-wsl.md'
 
 jobs:
   build:
