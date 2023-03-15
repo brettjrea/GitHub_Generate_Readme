@@ -5,7 +5,7 @@ on:
  push:
     paths:     
       - 'readme/generate-readme-table-of-contents.md'
-      - 'readme/debian-generate-readme.md'
+      - 'readme/windows-install-wsl.md'
       - 'readme/debian-bullseye-upgrade-script.md'
       - 'readme/ubuntu-jammy-upgrade-script.md'
       - 'readme/debian-install-nvm.md'
@@ -16,8 +16,7 @@ on:
       - 'readme/gatsby-typescript-styled-components.md'
       - 'readme/debian-configure-pm2.md'
       - 'readme/debian-install-github-cli.md'
-      - 'readme/windows-install-wsl.md'
-
+      
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,7 +25,15 @@ jobs:
        env:
          MODIFIED: ${{ toJson(github.event.head_commit.modified) }}
        run: echo $MODIFIED
-
+       
+     - name: Trigger Single Repository
+       uses: peter-evans/repository-dispatch@v2
+       with:
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        repository: brettjrea/Windows_WSL_Debian
+        event-type: file-changed
+        client-payload: '{ "message":"windows-install-wsl.md changed" }'
+        
      - name: Trigger Single Repository
        uses: peter-evans/repository-dispatch@v2
        with:
@@ -107,13 +114,7 @@ jobs:
         event-type: file-changed
         client-payload: '{ "message":"debian-install-github-cli.md changed" }'
         
-     - name: Trigger Single Repository
-       uses: peter-evans/repository-dispatch@v2
-       with:
-        token: ${{ secrets.REPO_ACCESS_TOKEN }}
-        repository: brettjrea/Windows_WSL_Debian
-        event-type: file-changed
-        client-payload: '{ "message":"windows-install-wsl.md changed" }'
+
     
 
 
