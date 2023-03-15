@@ -121,7 +121,7 @@ jobs:
 
      - name: Combine files
        run: |
-          toc=$(curl -sS https://raw.githubusercontent.com/brettjrea/GitHub_Generate_Readme/main/readme/table-of-contents.md)
+          toc=$(curl -sS https://raw.githubusercontent.com/brettjrea/GitHub_Generate_Readme/main/readme/generate-readme-table-of-contents.md)
           config=$(curl -sS https://raw.githubusercontent.com/brettjrea/GitHub_Generate_Readme/main/readme/debian-generate-readme.md)
           readme="$(echo -e "${toc}\n---\n${config}")"
           echo "${readme}" > README.md
