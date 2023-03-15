@@ -27,6 +27,4 @@
 9. Add GitHub CLI:
    1. [Install GitHub CLI](https://github.com/brettjrea/Debian_Install_GitHub_CLI)
 ---
-### Debian Generate Readme
-
-This is a repository designed for generating my README files in a modular way.
+404: Not Found
