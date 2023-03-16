@@ -1,0 +1,32 @@
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'readme/windows-install-wsl.md'
+      - 'readme/debian-bullseye-upgrade-script.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        mapping: ${{ fromYaml(file('repositories.yaml')) }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2  # OR "2" -> To retrieve the preceding commit.
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+
+      - name: Run a step if a file was modified
+        run: |
+          for file in ${{ steps.changed-files.outputs.modified_files }}; do
+            repo=$(echo "${{ matrix.mapping.${file##*/} }}" | tr -d '\r')
+            if [ -n "${repo}" ]; then
+              echo "File ${file} was modified, dispatching to repository ${repo}"
+              # Dispatch the repository event here, using $repo as the repository name
+            fi
+          done
