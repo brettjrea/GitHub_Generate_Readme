@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:     
-      - 'readme/generate-readme-table-of-contents.md'
+      - 'debian-bullseye-upgrade-script.md'
       
   repository_dispatch:
     types: [file-changed]
