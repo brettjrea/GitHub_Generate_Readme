@@ -1,34 +1,35 @@
+name: watch readme
+
+env:
+  REPO_NAME: brettjrea/Windows_WSL_Debian
+  WINDOWS_INSTALL_FILE: readme/windows-install-wsl.md
+  DEBIAN_UPGRADE_FILE: readme/debian-bullseye-upgrade-script.md
+
 on:
   workflow_dispatch:
   push:
     paths:
-      - 'readme/windows-install-wsl.md'
-      - 'readme/debian-bullseye-upgrade-script.md'
-
-env:
-  REPOSITORY_MAPPING: '{ "readme/windows-install-wsl.md": "brettjrea/Windows_WSL_Debian", "readme/debian-bullseye-upgrade-script.md": "myusername/myrepo" }'
+      - ${{ env.WINDOWS_INSTALL_FILE }}
+      - ${{ env.DEBIAN_UPGRADE_FILE }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2  # OR "2" -> To retrieve the preceding commit.
         
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v5
-        
-      - name: Notify repository update
-        if: ${{ github.event_name == 'push' || contains(steps.changed-files.outputs.modified_files, 'readme/') }}
-        run: |
-          echo "${{ github.event_name }}: repository update"
-          for file in ${{ steps.changed-files.outputs.modified_files }}; do
-            repository=$(echo ${{ fromJson('{"mapping":' + (env.REPOSITORY_MAPPING | fromJson) + '}') }} | jq -r '.mapping["'${file}'"]')
-            echo "File '${file}' was modified. Notifying repository '${repository}'."
-            curl -X POST \
-              -H "Accept: application/vnd.github.everest-preview+json" \
-              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-              "https://api.github.com/repos/${repository}/dispatches" \
-              -d '{"event_type": "file-changed", "client_payload": { "message": "'"${file}"' changed" }}'
-          done
+        uses: tj-actions/changed-files@v35
+
+      - name: Dispatch event if a watched file was modified
+        if: ${{ contains([env.WINDOWS_INSTALL_FILE, env.DEBIAN_UPGRADE_FILE], steps.changed-files.outputs.modified_files) }}
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: ${{ env.REPO_NAME }}
+          event-type: file-changed
+          client-payload: '{ "message": "${{ github.event_name }}: ${{ steps.changed-files.outputs.modified_files }} modified" }'
