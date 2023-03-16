@@ -16,4 +16,3 @@ sudo apt autoremove -y &&
 sudo apt clean -y
 set -o emacs
 ```
-test
