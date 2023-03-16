@@ -1,4 +1,4 @@
-name: Watch Bash Files
+name: Watch Bash Scripts
 
 on:
  workflow_dispatch:
@@ -20,5 +20,5 @@ jobs:
        with:
         token: ${{ secrets.REPO_ACCESS_TOKEN }}
         repository: brettjrea/Debian_Bullseye_Upgrade_Script
-        event-type: file-changed
+        event-type: script-changed
         client-payload: '{ "message":"debian-bullseye-upgrade-script.sh changed" }'
