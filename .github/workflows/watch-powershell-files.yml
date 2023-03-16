@@ -5,6 +5,7 @@ on:
  push:
     paths:     
       - 'powershell/windows-install-wsl.ps1'
+      - 'powershell/install-vsc-remote-pack.ps1'
       
 jobs:
   build:
@@ -20,5 +21,13 @@ jobs:
        with:
         token: ${{ secrets.REPO_ACCESS_TOKEN }}
         repository: brettjrea/Windows_WSL_Debian
-        event-type: file-changed
+        event-type: script-changed
         client-payload: '{ "message":"windows-install-wsl.ps1 changed" }'
+
+     - name: Trigger Single Repository
+       uses: peter-evans/repository-dispatch@v2
+       with:
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        repository: brettjrea/Windows_VSC_Remote_Pack
+        event-type: script-changed
+        client-payload: '{ "message":"install-vsc-remote-pack.ps1 changed" }'
