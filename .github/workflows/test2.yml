@@ -3,7 +3,7 @@ on:
   push:
 
 env:
-  REPOSITORY_MAPPING: ${{ secrets.REPOSITORY_MAPPING_JSON }}
+  REPOSITORY_MAPPING: '{ "readme/windows-install-wsl.md": "brettjrea/Windows_WSL_Debian", "readme/debian-bullseye-upgrade-script.md": "brettjrea/Debian_Bullseye_Upgrade_Script" }'
 
 jobs:
   build:
