@@ -1,0 +1,36 @@
+name: Watch Readme Files
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'readme/windows-install-wsl.md'
+      - 'readme/debian-bullseye-upgrade-script.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get changed files
+        id: changed-files
+        uses: jitterbit/get-changed-files@v1
+
+      - name: Trigger repository dispatch
+        if: >
+          ${{ contains(steps.changed-files.outputs.modified, 'readme/windows-install-wsl.md') }}
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: brettjrea/Windows_WSL_Debian
+          event-type: file-changed
+          client-payload: '{ "message": "windows-install-wsl.md changed" }'
+      - name: Trigger repository dispatch
+        if: >
+          ${{ contains(steps.changed-files.outputs.modified, 'readme/debian-bullseye-upgrade-script.md') }}
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: brettjrea/Debian_Bullseye_Upgrade_Script
+          event-type: file-changed
+          client-payload: '{ "message": "debian-bullseye-upgrade-script.md changed" }'
+
