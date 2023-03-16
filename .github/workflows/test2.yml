@@ -5,29 +5,30 @@ on:
       - 'readme/windows-install-wsl.md'
       - 'readme/debian-bullseye-upgrade-script.md'
 
+env:
+  REPOSITORY_MAPPING: '{ "readme/windows-install-wsl.md": "brettjrea/Windows_WSL_Debian", "readme/debian-bullseye-upgrade-script.md": "myusername/myrepo" }'
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix: ${{ fromJson('{"mapping":' + (env.REPOSITORY_MAPPING | fromJson) + '}') }}
-    env:
-      REPOSITORY_MAPPING: ${{ toJson(fromFile('repositories.json')) }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 2  # OR "2" -> To retrieve the preceding commit.
-
+        
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v35
-
-      - name: Run a step if a file was modified
+        uses: tj-actions/changed-files@v5
+        
+      - name: Notify repository update
+        if: ${{ github.event_name == 'push' || contains(steps.changed-files.outputs.modified_files, 'readme/') }}
         run: |
+          echo "${{ github.event_name }}: repository update"
           for file in ${{ steps.changed-files.outputs.modified_files }}; do
-            repo=$(echo "${{ matrix.mapping.${file##*/} }}" | tr -d '\r')
-            if [ -n "${repo}" ]; then
-              echo "File ${file} was modified, dispatching to repository ${repo}"
-              # Dispatch the repository event here, using $repo as the repository name
-            fi
+            repository=$(echo ${{ fromJson('{"mapping":' + (env.REPOSITORY_MAPPING | fromJson) + '}') }} | jq -r '.mapping["'${file}'"]')
+            echo "File '${file}' was modified. Notifying repository '${repository}'."
+            curl -X POST \
+              -H "Accept: application/vnd.github.everest-preview+json" \
+              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              "https://api.github.com/repos/${repository}/dispatches" \
+              -d '{"event_type": "file-changed", "client_payload": { "message": "'"${file}"' changed" }}'
           done
