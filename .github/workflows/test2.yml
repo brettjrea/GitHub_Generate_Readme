@@ -1,16 +1,9 @@
-name: watch readme
-
-env:
-  REPO_NAME: brettjrea/Windows_WSL_Debian
-  WINDOWS_INSTALL_FILE: readme/windows-install-wsl.md
-  DEBIAN_UPGRADE_FILE: readme/debian-bullseye-upgrade-script.md
-
 on:
   workflow_dispatch:
   push:
-    paths:
-      - ${{ env.WINDOWS_INSTALL_FILE }}
-      - ${{ env.DEBIAN_UPGRADE_FILE }}
+
+env:
+  REPOSITORY_MAPPING: '{ "readme/windows-install-wsl.md": "brettjrea/Windows_WSL_Debian", "readme/debian-bullseye-upgrade-script.md": "myusername/myrepo" }'
 
 jobs:
   build:
@@ -19,17 +12,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 2  # OR "2" -> To retrieve the preceding commit.
-        
+          fetch-depth: 2
+
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v35
 
-      - name: Dispatch event if a watched file was modified
-        if: ${{ contains([env.WINDOWS_INSTALL_FILE, env.DEBIAN_UPGRADE_FILE], steps.changed-files.outputs.modified_files) }}
+      - name: Extract file name
+        id: extract-file
+        run: |
+          MODIFIED_FILES=$(echo "${{ steps.changed-files.outputs.modified_files }}" | tr -d '\n')
+          FILENAME=$(echo "$MODIFIED_FILES" | head -n1)
+          echo "::set-output name=filename::$FILENAME"
+
+      - name: Extract repository name
+        id: extract-repo
+        run: |
+          FILENAME="${{ steps.extract-file.outputs.filename }}"
+          REPO=$(echo "$REPOSITORY_MAPPING" | jq -r '."'"$FILENAME"'"')
+          echo "::set-output name=repository::$REPO"
+
+      - name: Run a step if a file was modified
+        if: steps.changed-files.outputs.modified_files != ''
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          repository: ${{ env.REPO_NAME }}
+          repository: ${{ steps.extract-repo.outputs.repository }}
           event-type: file-changed
-          client-payload: '{ "message": "${{ github.event_name }}: ${{ steps.changed-files.outputs.modified_files }} modified" }'
+          client-payload: '{ "message": "A file was modified" }'
