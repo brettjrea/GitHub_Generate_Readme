@@ -1,4 +1,4 @@
-name: Watch Readme Files
+name: Watch Powershell Files
 
 on:
  workflow_dispatch:
