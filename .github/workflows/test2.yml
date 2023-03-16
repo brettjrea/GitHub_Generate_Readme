@@ -9,8 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        mapping: ${{ fromYaml(file('repositories.yaml')) }}
+      matrix: ${{ fromJson('{"mapping":' + (env.REPOSITORY_MAPPING | fromJson) + '}') }}
+    env:
+      REPOSITORY_MAPPING: ${{ toJson(fromFile('repositories.json')) }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
