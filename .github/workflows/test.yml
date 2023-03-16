@@ -32,6 +32,6 @@ jobs:
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           # Use the repo name from the path of the modified file
-          repository: brettjrea/${{ (split(github.event.head_commit.modified[0], '/'))[0] }}
+          repository: brettjrea/${{ basename(github.event.head_commit.modified[0]) }}
           event-type: file-changed
           client-payload: '{ "message": ${{ github.event.head_commit.modified[0] }} }'
