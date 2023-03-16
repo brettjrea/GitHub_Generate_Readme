@@ -1,8 +1,6 @@
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
 
 env:
   REPOSITORY_MAPPING: '{ "readme/windows-install-wsl.md": "brettjrea/Windows_WSL_Debian", "readme/debian-bullseye-upgrade-script.md": "brettjrea/Debian_Bullseye_Upgrade_Script" }'
@@ -12,11 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
 
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v5
+        uses: tj-actions/changed-files@v35
 
       - name: Extract file name
         id: extract-file
@@ -30,24 +30,13 @@ jobs:
         run: |
           FILENAME="${{ steps.extract-file.outputs.filename }}"
           REPO=$(echo "$REPOSITORY_MAPPING" | jq -r '."'"$FILENAME"'"')
-          if [[ -z "$REPO" ]]; then
-            echo "::warning::No repository found for file $FILENAME"
-            echo "::set-output name=repository::none"
-          else
-            echo "::set-output name=repository::$REPO"
-          fi
+          echo "::set-output name=repository::$REPO"
 
       - name: Run a step if a file was modified
-        if: steps.changed-files.outputs.modified_files != '' && steps.extract-repo.outputs.repository != 'none'
-        uses: peter-evans/repository-dispatch@v1
+        if: steps.changed-files.outputs.modified_files != ''
+        uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: ${{ steps.extract-repo.outputs.repository }}
           event-type: file-changed
           client-payload: '{ "message": "A file was modified" }'
-
-      - name: Report if no dispatches were sent
-        if: steps.changed-files.outputs.modified_files != '' && steps.extract-repo.outputs.repository == 'none'
-        run: |
-          echo "::warning::No repository found for any modified files"
-          echo "::set-output name=no-dispatches-sent::true"
