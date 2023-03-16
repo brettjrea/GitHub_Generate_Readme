@@ -1,11 +1,8 @@
 name: Watch Readme Files
 
 on:
-  workflow_dispatch:
   push:
-    paths:
-      - 'readme/windows-install-wsl.md'
-      - 'readme/debian-bullseye-upgrade-script.md'
+  workflow_dispatch:
 
 jobs:
   build:
