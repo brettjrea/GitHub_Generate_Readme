@@ -13,14 +13,16 @@ jobs:
     steps:
       - name: Get changed files
         id: changed-files
-        uses: jitterbit/get-changed-files@v1
+        uses: tj-actions/changed-files@v35
+        with:
+          json: "true"
 
-      - name: Debug jitterbit output
-        run: echo "${{ steps.changed-files.outputs.modified }}"
+      - name: Debug changed-files output
+        run: echo "${{ steps.changed-files.outputs.json }}"
 
       - name: Trigger repository dispatch
         if: >
-          ${{ contains(steps.changed-files.outputs.modified, 'readme/windows-install-wsl.md') }}
+          ${{ contains(fromJson(steps.changed-files.outputs.json).modified, 'readme/windows-install-wsl.md') }}
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
@@ -30,7 +32,7 @@ jobs:
 
       - name: Trigger repository dispatch
         if: >
-          ${{ contains(steps.changed-files.outputs.modified, 'readme/debian-bullseye-upgrade-script.md') }}
+          ${{ contains(fromJson(steps.changed-files.outputs.json).modified, 'readme/debian-bullseye-upgrade-script.md') }}
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
