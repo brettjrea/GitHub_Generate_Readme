@@ -3,8 +3,9 @@ name: Generate Readme
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
+    paths:     
+      - 'readme/generate-readme-table-of-contents.md'
+      
   repository_dispatch:
     types: [file-changed]
 
