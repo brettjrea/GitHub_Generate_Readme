@@ -22,7 +22,7 @@ jobs:
         run: echo "${{ steps.changed-files.outputs.json }}"
 
       - name: Trigger repository dispatch
-        if: ${{ contains(fromJSON(steps.changed-files.outputs.json).modified, 'readme/windows-install-wsl.md') }}
+        if: ${{ contains(fromJson(steps.changed-files.outputs.json.replace('\'', '\"')).modified, 'readme/windows-install-wsl.md') }}
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
@@ -32,7 +32,7 @@ jobs:
 
 
       - name: Watch Readme Files
-        if: ${{ contains(fromJson(steps.changed-files.outputs.json).modified, 'readme/debian-bullseye-upgrade-script.md') }}
+        if: ${{ contains(fromJson(steps.changed-files.outputs.json.replace('\'', '\"')).modified, 'readme/debian-bullseye-upgrade-script.md') }}
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
