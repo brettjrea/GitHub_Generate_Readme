@@ -1,5 +1,3 @@
-name: Watch Readme Files
-
 on:
   workflow_dispatch:
   push:
@@ -11,6 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v35
@@ -20,7 +21,7 @@ jobs:
       - name: Debug changed-files output
         run: echo "${{ steps.changed-files.outputs.json }}"
 
-      - name: Trigger repository dispatch
+      - name: Watch Readme Files
         if: >
           ${{ contains(fromJson(steps.changed-files.outputs.json).modified, 'readme/windows-install-wsl.md') }}
         uses: peter-evans/repository-dispatch@v2
@@ -30,7 +31,7 @@ jobs:
           event-type: file-changed
           client-payload: '{ "message": "windows-install-wsl.md changed" }'
 
-      - name: Trigger repository dispatch
+      - name: Watch Readme Files
         if: >
           ${{ contains(fromJson(steps.changed-files.outputs.json).modified, 'readme/debian-bullseye-upgrade-script.md') }}
         uses: peter-evans/repository-dispatch@v2
