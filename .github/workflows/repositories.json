@@ -1,4 +1,4 @@
 {
- windows-install-wsl.md: brettjrea/Windows_WSL_Debian,
- debian-bullseye-upgrade-script.md: brettjrea/Debian_Bullseye_Upgrade_Script
+  "windows-install-wsl.md": "brettjrea/Windows_WSL_Debian",
+  "debian-bullseye-upgrade-script.md": "brettjrea/Debian_Bullseye_Upgrade_Script"
 }
