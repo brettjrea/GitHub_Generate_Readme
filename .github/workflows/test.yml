@@ -1,3 +1,5 @@
+name: watch readme 
+
 on:
   workflow_dispatch:
   push:
@@ -15,27 +17,22 @@ jobs:
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v35
-        with:
-          json: "true"
 
-      - name: Debug changed-files output
-        run: echo "${{ steps.changed-files.outputs.json }}"
-
-      - name: Trigger repository dispatch
-        if: ${{ contains(fromJson(steps.changed-files.outputs.json.replace('\'', '\"')).modified, 'readme/windows-install-wsl.md') }}
+      - name: Run a step if readme/windows-install-wsl.md was modified
+        if: contains(steps.changed-files.outputs.modified_files, 'readme/windows-install-wsl.md')
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: brettjrea/Windows_WSL_Debian
           event-type: file-changed
           client-payload: '{ "message": "windows-install-wsl.md changed" }'
-
-
-      - name: Watch Readme Files
-        if: ${{ contains(fromJson(steps.changed-files.outputs.json.replace('\'', '\"')).modified, 'readme/debian-bullseye-upgrade-script.md') }}
+          
+      - name: Run a step if readme/debian-bullseye-upgrade-script.md was modified
+        if: contains(steps.changed-files.outputs.modified_files, 'readme/debian-bullseye-upgrade-script.md')
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          repository: brettjrea/Debian_Bullseye_Upgrade_Script
+          repository: brettjrea/Windows_WSL_Debian
           event-type: file-changed
-          client-payload: '{ "message": "debian-bullseye-upgrade-script.md changed" }'
+          client-payload: '{ "message": "readme/debian-bullseye-upgrade-script.md" }'
+ 
