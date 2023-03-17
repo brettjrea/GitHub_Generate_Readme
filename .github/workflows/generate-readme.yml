@@ -1,10 +1,10 @@
-name: Generate Readme
+name: GitHub Generate Readme
 
 on:
   workflow_dispatch:
   push:
     paths:     
-      - 'debian-bullseye-upgrade-script.md'
+      - 'github-generate-readme.md'
       
   repository_dispatch:
     types: [file-changed]
