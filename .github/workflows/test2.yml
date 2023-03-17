@@ -1,4 +1,4 @@
-name: Workflow Name
+name: Watch Readme Files
 
 on:
   workflow_dispatch:
