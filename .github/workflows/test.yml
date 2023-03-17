@@ -46,13 +46,14 @@ jobs:
 
       - name: Extract repository name
         id: extract-repo
+        if: steps.extract-file.outputs.filename != 'readme/generate-readme-table-of-contents.md' && steps.extract-file.outputs.filename != 'readme/github-generate-readme.md'
         run: |
           FILENAME="${{ steps.extract-file.outputs.filename }}"
           REPO=$(echo "$REPOSITORY_MAPPING" | jq -r '."'"$FILENAME"'"')
           echo "::set-output name=repository::$REPO"
 
       - name: Run a step if a file was modified
-        if: steps.changed-files.outputs.modified_files != ''
+        if: steps.changed-files.outputs.modified_files != '' && steps.extract-repo.outputs.repository != ''
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
