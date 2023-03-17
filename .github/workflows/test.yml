@@ -57,11 +57,13 @@ jobs:
           GH_TOKEN: ${{ secrets.GIST_UPDATE_TOKEN }}
         run: |
           FILENAME="${{ steps.extract-file.outputs.filename }}"
+          GIST_FILENAME=$(basename "$FILENAME")
           GIST_ID=$(echo "$GIST_MAPPING" | jq -r '."'"$FILENAME"'"')
           CONTENT=$(cat "$FILENAME")
           echo "Updating Gist $GIST_ID with the content of $FILENAME"
           export GITHUB_TOKEN=$GH_TOKEN
-          echo "$CONTENT" | gh gist edit "$GIST_ID" --filename "$FILENAME"
+          echo "$CONTENT" | gh gist edit "$GIST_ID" --filename "$GIST_FILENAME"
+
 
       - name: Run a single dispatch step if a file was modified
         uses: peter-evans/repository-dispatch@v2
