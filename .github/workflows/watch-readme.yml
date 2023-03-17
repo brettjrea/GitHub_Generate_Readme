@@ -69,7 +69,6 @@ jobs:
           readme="$(echo -e "${toc}\n---\n${config}")"
           echo "${readme}" > README.md
 
-
       - name: Auto commit
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
