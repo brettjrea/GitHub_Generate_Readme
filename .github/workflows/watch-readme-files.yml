@@ -6,6 +6,7 @@ on:
     paths:     
      - 'readme/**'
      - '!readme/generate-readme-table-of-contents.md'
+     - '!readme/github-generate-readme.md'
      
 env:
   REPOSITORY_MAPPING: >-
