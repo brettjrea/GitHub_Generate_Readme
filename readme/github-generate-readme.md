@@ -7,12 +7,12 @@ A README file is a crucial part of any repository, as it provides important info
 
 A good README file should contain the following information:
 
-Project Overview: Provide a brief introduction to your project, what it does, and what problem it solves.
+ 1.Project Overview: Provide a brief introduction to your project, what it does, and what problem it solves.
 
-Installation: Explain how to install your project, including any dependencies required.
+ 2.Installation: Explain how to install your project, including any dependencies required.
 
-Usage: Provide instructions on how to use your project, including any commands or scripts required.
+ 3.Usage: Provide instructions on how to use your project, including any commands or scripts required.
 
-Contributing: Explain how other users can contribute to your project, including how to submit issues or pull requests.
+ 4.Contributing: Explain how other users can contribute to your project, including how to submit issues or pull requests.
 
-License: Include a license for your project, specifying how others can use and distribute your code.
+ 5.License: Include a license for your project, specifying how others can use and distribute your code.
