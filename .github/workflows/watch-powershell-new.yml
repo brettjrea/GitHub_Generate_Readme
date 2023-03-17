@@ -11,7 +11,7 @@ on:
 env:
   REPOSITORY_MAPPING: >-
     {
-    "bash/debian-bullseye-upgrade-script.sh": "brettjrea/Debian_Bullseye_Upgrade_Script"
+    "powershell/windows-install-wsl.ps1": "brettjrea/Windows_WSL_Debian"
     }
 
 jobs:
