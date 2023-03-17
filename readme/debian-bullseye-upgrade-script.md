@@ -14,5 +14,4 @@ sudo bash fixscripts.sh &&
 sudo bash upgrade.sh && 
 sudo apt autoremove -y &&
 sudo apt clean -y
-set -o emacs
 ```
