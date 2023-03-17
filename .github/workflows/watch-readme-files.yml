@@ -1,9 +1,13 @@
+name: Workflow Name
+
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
 
 env:
-  REPOSITORY_MAPPING: >
+  REPOSITORY_MAPPING: >-
     {
     "readme/windows-install-wsl.md": "brettjrea/Windows_WSL_Debian",
     "readme/debian-bullseye-upgrade-script.md": "brettjrea/Debian_Bullseye_Upgrade_Script",
@@ -16,39 +20,38 @@ env:
     "readme/gatsby-typescript-styled-components.md": "brettjrea/Gatsby_Typescript_Styled_Components",
     "readme/debian-configure-pm2.md": "brettjrea/Debian_Configure_PM2",
     "readme/debian-install-github-cli.md": "brettjrea/Debian_Install_GitHub_CLI"
-}
-
+    }
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 2
+        uses: actions/checkout@v2
 
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v35
+        uses: tj-actions/changed-files@v1
 
       - name: Extract file name
         id: extract-file
         run: |
           MODIFIED_FILES=$(echo "${{ steps.changed-files.outputs.modified_files }}" | tr -d '\n')
-          FILENAME=$(echo "$MODIFIED_FILES" | head -n1)
+          FILENAME=$(echo "$MODIFIED_FILES" | grep -E '^readme/generate-readme-table-of-contents\.md$' || true)
           echo "::set-output name=filename::$FILENAME"
 
       - name: Extract repository name
         id: extract-repo
         run: |
           FILENAME="${{ steps.extract-file.outputs.filename }}"
-          REPO=$(echo "$REPOSITORY_MAPPING" | jq -r '."'"$FILENAME"'"')
-          echo "::set-output name=repository::$REPO"
+          if [ -n "$FILENAME" ]; then
+            REPO=$(echo "$REPOSITORY_MAPPING" | jq -r '."'"$FILENAME"'"')
+            echo "::set-output name=repository::$REPO"
+          fi
 
       - name: Run a step if a file was modified
-        if: steps.changed-files.outputs.modified_files != ''
-        uses: peter-evans/repository-dispatch@v2
+        if: steps.extract-repo.outputs.repository != null
+        uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: ${{ steps.extract-repo.outputs.repository }}
