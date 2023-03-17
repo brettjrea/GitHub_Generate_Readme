@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'generate-readme-table-of-contents.md'
-      - 'github-generate-readme.md'
+      - 'readme/generate-readme-table-of-contents.md'
+      - 'readme/github-generate-readme.md'
       
   repository_dispatch:
     types: [file-changed]
