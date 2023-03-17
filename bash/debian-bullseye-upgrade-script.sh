@@ -12,3 +12,4 @@ apt upgrade -y
 apt dist-upgrade -y
 apt autoremove -y
 apt clean -y
+test
