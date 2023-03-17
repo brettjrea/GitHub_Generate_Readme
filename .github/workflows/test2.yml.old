@@ -18,7 +18,7 @@ env:
     "readme/gatsby-typescript-styled-components.md": "brettjrea/Gatsby_Typescript_Styled_Components",
     "readme/debian-configure-pm2.md": "brettjrea/Debian_Configure_PM2",
     "readme/debian-install-github-cli.md": "brettjrea/Debian_Install_GitHub_CLI"
-  }
+    }
 
 jobs:
   build:
