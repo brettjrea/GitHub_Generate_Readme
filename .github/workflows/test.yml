@@ -1,0 +1,77 @@
+name: Watch Bash Files
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'bash/**'
+  repository_dispatch:
+    types: [file-changed]
+
+env:
+  REPOSITORY_MAPPING: >-
+    {
+    "bash/debian-bullseye-upgrade-script.sh": "brettjrea/Debian_Bullseye_Upgrade_Script"
+    }
+  GIST_MAPPING: >-
+    {
+    "bash/debian-bullseye-upgrade-script.sh": "gist_id_here"
+    }
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+          sudo apt-add-repository https://cli.github.com/packages
+          sudo apt update
+          sudo apt install gh
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+
+      - name: Extract file name
+        id: extract-file
+        run: |
+          MODIFIED_FILES=$(echo "${{ steps.changed-files.outputs.modified_files }}" | tr -d '\n')
+          FILENAME=$(echo "$MODIFIED_FILES" | head -n1)
+          echo "::set-output name=filename::$FILENAME"
+
+      - name: Extract repository name
+        id: extract-repo
+        run: |
+          FILENAME="${{ steps.extract-file.outputs.filename }}"
+          REPO=$(echo "$REPOSITORY_MAPPING" | jq -r '."'"$FILENAME"'"')
+          echo "::set-output name=repository::$REPO"
+
+      - name: Update Gist with modified content
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          FILENAME="${{ steps.extract-file.outputs.filename }}"
+          GIST_ID=$(echo "$GIST_MAPPING" | jq -r '."'"$FILENAME"'"')
+          CONTENT=$(cat "$FILENAME")
+          echo "Updating Gist $GIST_ID with the content of $FILENAME"
+          echo "$CONTENT" | gh gist edit "$GIST_ID" --filename "$FILENAME" --token "$GITHUB_TOKEN"
+
+      - name: Run a single dispatch step if a file was modified
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: ${{ steps.extract-repo.outputs.repository }}
+          event-type: file-changed
+          client-payload: '{ "message": "A bash script was modified" }'
+
+      - name: Auto commit
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'Auto commit updated README.md'
+          file_pattern: 'README.md'
