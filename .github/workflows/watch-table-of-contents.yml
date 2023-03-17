@@ -1,0 +1,37 @@
+name: Watch Readme Files
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'readme/generate-readme-table-of-contents.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repository:
+          - brettjrea/Windows_WSL_Debian
+          - brettjrea/Debian_Bullseye_Upgrade_Script
+          - brettjrea/Ubuntu_Jammy_Upgrade_Script
+          - brettjrea/Debian_Install_NVM
+          - brettjrea/Debian_Install_NVS
+          - brettjrea/Debian_Install_Common_Build_Tools
+          - brettjrea/Debian_Strapi_Backend_API
+          - brettjrea/Debian_Gatsby_Frontend_Client
+          - brettjrea/Gatsby_Typescript_Styled_Components
+          - brettjrea/Debian_Configure_PM2
+          - brettjrea/Debian_Install_GitHub_CLI
+        message:
+          - generate-readme-table-of-contents.md changed
+   
+    steps:
+      
+      - name: Trigger Single Repository
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: ${{ matrix.repository }}
+          event-type: file-changed
+          client-payload: '{ "message": "${{ matrix.message }}" }'
