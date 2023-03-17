@@ -11,7 +11,7 @@ on:
 env:
   REPOSITORY_MAPPING: >-
     {
-    "debian-bullseye-upgrade-script.sh": "brettjrea/Debian_Bullseye_Upgrade_Script"
+    "bash/debian-bullseye-upgrade-script.sh": "brettjrea/Debian_Bullseye_Upgrade_Script"
     }
 
 jobs:
