@@ -4,24 +4,14 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'readme/**'
+      - 'bash/**'
   repository_dispatch:
     types: [file-changed]
 
 env:
   REPOSITORY_MAPPING: >-
     {
-    "readme/windows-install-wsl.md": "brettjrea/Windows_WSL_Debian",
-    "readme/debian-bullseye-upgrade-script.md": "brettjrea/Debian_Bullseye_Upgrade_Script",
-    "readme/ubuntu-jammy-upgrade-script.md": "brettjrea/Ubuntu_Jammy_Upgrade_Script",
-    "readme/debian-install-nvm.md": "brettjrea/Debian_Install_NVM",
-    "readme/debian-install-nvs.md": "brettjrea/Debian_Install_NVS",
-    "readme/debian-install-common-build-tools.md": "brettjrea/Debian_Install_Common_Build_Tools",
-    "readme/debian-strapi-backend-api.md": "brettjrea/Debian_Strapi_Backend_API",
-    "readme/debian-gatsby-frontend-client.md": "brettjrea/Debian_Gatsby_Frontend_Client",
-    "readme/gatsby-typescript-styled-components.md": "brettjrea/Gatsby_Typescript_Styled_Components",
-    "readme/debian-configure-pm2.md": "brettjrea/Debian_Configure_PM2",
-    "readme/debian-install-github-cli.md": "brettjrea/Debian_Install_GitHub_CLI"
+    "debian-bullseye-upgrade-script.sh": "brettjrea/Debian_Bullseye_Upgrade_Script"
     }
 
 jobs:
@@ -46,7 +36,6 @@ jobs:
 
       - name: Extract repository name
         id: extract-repo
-        if: steps.extract-file.outputs.filename != 'readme/generate-readme-table-of-contents.md' && steps.extract-file.outputs.filename != 'readme/github-generate-readme.md'
         run: |
           FILENAME="${{ steps.extract-file.outputs.filename }}"
           REPO=$(echo "$REPOSITORY_MAPPING" | jq -r '."'"$FILENAME"'"')
@@ -59,15 +48,7 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: ${{ steps.extract-repo.outputs.repository }}
           event-type: file-changed
-          client-payload: '{ "message": "A file was modified" }'
-
-      - name: Combine files from this repository and commit if specified files were modified
-        if: "contains(steps.changed-files.outputs.modified_files, 'readme/generate-readme-table-of-contents.md') || contains(steps.changed-files.outputs.modified_files, 'readme/github-generate-readme.md') || github.event_name == 'repository_dispatch'"
-        run: |
-          toc=$(cat readme/generate-readme-table-of-contents.md)
-          config=$(cat readme/github-generate-readme.md)
-          readme="$(echo -e "${toc}\n---\n${config}")"
-          echo "${readme}" > README.md
+          client-payload: '{ "message": "A bash script was modified" }'
 
       - name: Auto commit
         uses: stefanzweifel/git-auto-commit-action@v4
