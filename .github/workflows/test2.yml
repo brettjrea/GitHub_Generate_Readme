@@ -5,9 +5,19 @@ on:
 env:
   REPOSITORY_MAPPING: >-
     {
-      "readme/windows-install-wsl.md": "brettjrea/Windows_WSL_Debian",
-      "readme/debian-bullseye-upgrade-script.md": "brettjrea/Debian_Bullseye_Upgrade_Script"
-    }
+    "readme/windows-install-wsl.md": "brettjrea/Windows_WSL_Debian",
+    "readme/debian-bullseye-upgrade-script.md": "brettjrea/Debian_Bullseye_Upgrade_Script",
+    "readme/ubuntu-jammy-upgrade-script.md": "brettjrea/Ubuntu_Jammy_Upgrade_Script",
+    "readme/debian-install-nvm.md": "brettjrea/Debian_Install_NVM",
+    "readme/debian-install-nvs.md": "brettjrea/Debian_Install_NVS",
+    "readme/debian-install-common-build-tools.md": "brettjrea/Debian_Install_Common_Build_Tools",
+    "readme/debian-strapi-backend-api.md": "brettjrea/Debian_Strapi_Backend_API",
+    "readme/debian-gatsby-frontend-client.md": "brettjrea/Debian_Gatsby_Frontend_Client",
+    "readme/gatsby-typescript-styled-components.md": "brettjrea/Gatsby_Typescript_Styled_Components",
+    "readme/debian-configure-pm2.md": "brettjrea/Debian_Configure_PM2",
+    "readme/debian-install-github-cli.md": "brettjrea/Debian_Install_GitHub_CLI"
+}
+
 
 jobs:
   build:
