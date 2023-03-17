@@ -1,4 +1,4 @@
-name: Update Readme and Dispatch
+name: Watch Bash Files
 
 on:
   workflow_dispatch:
@@ -42,7 +42,6 @@ jobs:
           echo "::set-output name=repository::$REPO"
 
       - name: Run a single dispatch step if a file was modified
-        if: steps.changed-files.outputs.modified_files != '' && steps.extract-repo.outputs.repository != ''
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
