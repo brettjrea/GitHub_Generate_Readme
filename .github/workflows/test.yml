@@ -55,13 +55,15 @@ jobs:
 
       - name: Update Gist with modified content
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           FILENAME="${{ steps.extract-file.outputs.filename }}"
           GIST_ID=$(echo "$GIST_MAPPING" | jq -r '."'"$FILENAME"'"')
           CONTENT=$(cat "$FILENAME")
           echo "Updating Gist $GIST_ID with the content of $FILENAME"
-          echo "$CONTENT" | gh gist edit "$GIST_ID" --filename "$FILENAME" --token "$GITHUB_TOKEN"
+          export GH_TOKEN
+          echo "$CONTENT" | gh gist edit "$GIST_ID" --filename "$FILENAME"
+
 
       - name: Run a single dispatch step if a file was modified
         uses: peter-evans/repository-dispatch@v2
