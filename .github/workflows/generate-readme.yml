@@ -3,7 +3,8 @@ name: GitHub Generate Readme
 on:
   workflow_dispatch:
   push:
-    paths:     
+    paths:
+      - 'generate-readme-table-of-contents.md'
       - 'github-generate-readme.md'
       
   repository_dispatch:
