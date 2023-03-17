@@ -27,6 +27,22 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repository:
+          - brettjrea/Windows_WSL_Debian
+          - brettjrea/Debian_Bullseye_Upgrade_Script
+          - brettjrea/Ubuntu_Jammy_Upgrade_Script
+          - brettjrea/Debian_Install_NVM
+          - brettjrea/Debian_Install_NVS
+          - brettjrea/Debian_Install_Common_Build_Tools
+          - brettjrea/Debian_Strapi_Backend_API
+          - brettjrea/Debian_Gatsby_Frontend_Client
+          - brettjrea/Gatsby_Typescript_Styled_Components
+          - brettjrea/Debian_Configure_PM2
+          - brettjrea/Debian_Install_GitHub_CLI
+        message:
+          - generate-readme-table-of-contents.md changed
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -69,9 +85,19 @@ jobs:
           readme="$(echo -e "${toc}\n---\n${config}")"
           echo "${readme}" > README.md
 
-
       - name: Auto commit
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'Auto commit updated README.md'
           file_pattern: 'README.md'
+
+      - name: Trigger Single Repository
+        if: contains(steps.changed-files.outputs.modified_files, 'readme/generate-readme-table-of-contents.md')
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: ${{ matrix.repository }}
+          event-type: file-changed
+          client-payload: '{ "message": "${{ matrix.message }}" }'
+
+
