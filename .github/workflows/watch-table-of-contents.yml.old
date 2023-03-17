@@ -28,7 +28,7 @@ jobs:
    
     steps:
       
-      - name: Trigger Single Repository
+      - name: Use Matrix to send dispatch to all repositories.
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
