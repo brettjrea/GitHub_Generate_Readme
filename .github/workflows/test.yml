@@ -62,7 +62,11 @@ jobs:
           CONTENT=$(cat "$FILENAME")
           echo "Updating Gist $GIST_ID with the content of $FILENAME"
           export GITHUB_TOKEN=$GH_TOKEN
-          echo "$CONTENT" | gh gist edit "$GIST_ID" --filename "$GIST_FILENAME"
+          TEMP_FILE=$(mktemp)
+          echo "$CONTENT" > "$TEMP_FILE"
+          gh gist edit "$GIST_ID" --filename "$GIST_FILENAME" --file "$TEMP_FILE"
+          rm "$TEMP_FILE"
+
 
 
       - name: Run a single dispatch step if a file was modified
