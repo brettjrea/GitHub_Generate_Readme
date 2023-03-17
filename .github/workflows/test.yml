@@ -1,5 +1,3 @@
-name: Update Readme and Dispatch
-
 on:
   workflow_dispatch:
   push:
@@ -36,7 +34,7 @@ jobs:
           echo "::set-output name=repository::$REPO"
 
       - name: Run a step if a file was modified
-        if: ${{ github.event.client_payload.message == "A file was modified" }}
+        if: ${{ github.event.client_payload.message == 'A file was modified' }}
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
@@ -66,8 +64,7 @@ jobs:
 
       - name: Extract repository name
         id: extract-repo
-        if: steps.extract-file.outputs.filename != 'readme/generate-readme-table-of-        contents.md' && steps.extract-file.outputs.filename != 'readme/github-generate-readme.md'
-        run: |
+        if: steps.extract-file.outputs.filename != 'readme/generate-readme-table-of-contents.md' && steps.extract-file.outputs.filename != 'readme/github-generate-readme.md
           FILENAME="${{ steps.extract-file.outputs.filename }}"
           REPO=$(echo "$REPOSITORY_MAPPING" | jq -r '."'"$FILENAME"'"')
           echo "::set-output name=repository::$REPO"
@@ -90,19 +87,22 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.client_payload.message == "generate-readme-table-of-contents.md changed" }}
     strategy:
-          matrix:
-            repository:
-              - brettjrea/Windows_WSL_Debian
-              - brettjrea/Debian_Bullseye_Upgrade_Script
-              - brettjrea/Ubuntu_Jammy_Upgrade_Script
-              - brettjrea/Debian_Install_NVM
-              - brettjrea/Debian_Install_NVS
-              - brettjrea/Debian_Install_Common_Build_Tools
-              - brettjrea/Debian_Strapi_Backend_API
-              - brettjrea/Debian_Gatsby_Frontend_Client
-              - brettjrea/Gatsby_Typescript_Styled_Components
-              - brettjrea/Debian_Configure_PM2
-              - brettjrea/Debian_Install_GitHub_CLI
+      matrix:
+        repository:
+          - brettjrea/Windows_WSL_Debian
+          - brettjrea/Debian_Bullseye_Upgrade_Script
+          - brettjrea/Ubuntu_Jammy_Upgrade_Script
+          - brettjrea/Debian_Install_NVM
+          - brettjrea/Debian_Install_NVS
+          - brettjrea/Debian_Install_Common_Build_Tools
+          - brettjrea/Debian_Strapi_Backend_API
+          - brettjrea/Debian_Gatsby_Frontend_Client
+          - brettjrea/Gatsby_Typescript_Styled_Components
+          - brettjrea/Debian_Configure_PM2
+          - brettjrea/Debian_Install_GitHub_CLI
+        message:
+          - generate-readme-table-of-contents.md changed
+
     steps:
       - name: Use Matrix to send dispatch to all repositories.
         uses: peter-evans/repository-dispatch@v2
@@ -110,6 +110,4 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: ${{ matrix.repository }}
           event-type: file-changed
-          client-payload: '{ "message": "generate-readme-table-of-contents.md changed" }'
-        
-
+          client-payload: '{ "message": "${{ matrix.message }}" }'
