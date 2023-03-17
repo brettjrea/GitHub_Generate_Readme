@@ -15,7 +15,7 @@ env:
     }
   GIST_MAPPING: >-
     {
-    "bash/debian-bullseye-upgrade-script.sh": "gist_id_here"
+    "bash/debian-bullseye-upgrade-script.sh": "9ac25d27f568138c0f505b0d83dfdfa5"
     }
 
 jobs:
