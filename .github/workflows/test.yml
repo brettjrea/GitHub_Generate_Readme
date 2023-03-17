@@ -64,7 +64,8 @@ jobs:
 
       - name: Extract repository name
         id: extract-repo
-        if: steps.extract-file.outputs.filename != 'readme/generate-readme-table-of-contents.md' && steps.extract-file.outputs.filename != 'readme/github-generate-readme.md
+        if: steps.extract-file.outputs.filename != 'readme/generate-readme-table-of-contents.md' && steps.extract-file.outputs.filename != 'readme/github-generate-readme.md'
+        run: |
           FILENAME="${{ steps.extract-file.outputs.filename }}"
           REPO=$(echo "$REPOSITORY_MAPPING" | jq -r '."'"$FILENAME"'"')
           echo "::set-output name=repository::$REPO"
@@ -111,3 +112,4 @@ jobs:
           repository: ${{ matrix.repository }}
           event-type: file-changed
           client-payload: '{ "message": "${{ matrix.message }}" }'
+
