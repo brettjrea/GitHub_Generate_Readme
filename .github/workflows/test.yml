@@ -52,7 +52,7 @@ jobs:
           REPO=$(echo "$REPOSITORY_MAPPING" | jq -r '."'"$FILENAME"'"')
           echo "::set-output name=repository::$REPO"
 
-      - name: Run a step if a file was modified
+      - name: Run a single dispatch step if a file was modified
         if: steps.changed-files.outputs.modified_files != '' && steps.extract-repo.outputs.repository != ''
         uses: peter-evans/repository-dispatch@v2
         with:
@@ -61,7 +61,7 @@ jobs:
           event-type: file-changed
           client-payload: '{ "message": "A file was modified" }'
 
-      - name: Combine files and commit if specified files were modified
+      - name: Combine files from this repository and commit if specified files were modified
         if: "contains(steps.changed-files.outputs.modified_files, 'readme/generate-readme-table-of-contents.md') || contains(steps.changed-files.outputs.modified_files, 'readme/github-generate-readme.md') || github.event_name == 'repository_dispatch'"
         run: |
           toc=$(cat readme/generate-readme-table-of-contents.md)
