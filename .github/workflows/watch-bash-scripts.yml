@@ -59,7 +59,6 @@ jobs:
           FILENAME="${{ steps.extract-file.outputs.filename }}"
           GIST_ID=$(echo "$GIST_MAPPING" | jq -r '."'"$FILENAME"'"')
           echo "::set-output name=gist-id::$GIST_ID"
-      
 
       - name: Set filename without path
         id: set-filename-without-path
@@ -67,7 +66,6 @@ jobs:
           FILENAME="${{ steps.extract-file.outputs.filename }}"
           FILENAME_WITHOUT_PATH=$(basename "$FILENAME")
           echo "::set-output name=filename-without-path::$FILENAME_WITHOUT_PATH"
-
 
       - name: Sync with Gist
         uses: popsiclestick/gist-sync-action@v1.2.0
