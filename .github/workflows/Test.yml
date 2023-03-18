@@ -72,7 +72,7 @@ jobs:
         with:
           auth: ${{ secrets.GIST_SYNC_TOKEN }}
           gist_url: "https://gist.github.com/brettjrea/${{ steps.extract-gist-id.outputs.gist-id }}"
-          gist_title: ${{ steps.set-filename-with-underscores.outputs.filename-with-underscores }}
-          gist_description: ${{ steps.extract-file.outputs.filename }}
+          gist_title: ${{ steps.set-filename-without-path.outputs.filename-without-path }}
+          gist_description: ${{ steps.extract-file.outputs.filename-without-path }}
           github_file: ${{ steps.extract-file.outputs.filename }}
           overwrite: true
