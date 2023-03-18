@@ -62,7 +62,7 @@ jobs:
         uses: popsiclestick/gist-sync-action@v1.2.0
         with:
           auth: ${{ secrets.GIST_SYNC_TOKEN }}
-          gist_url: "https://gist.github.com/${{ steps.extract-repo.outputs.repository }}/${{ steps.extract-file.outputs.filename }}/raw/${{ steps.extract-gist-id.outputs.gist-id }}"
+          gist_url: "https://gist.github.com/brettjrea/${{ steps.extract-gist-id.outputs.gist-id }}"
           gist_title: ${{ steps.extract-file.outputs.filename }}
           gist_description: ${{ steps.extract-file.outputs.filename }}
           github_file: ${{ steps.extract-file.outputs.filename }}
