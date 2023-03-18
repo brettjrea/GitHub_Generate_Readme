@@ -58,12 +58,14 @@ jobs:
           GIST_ID=$(echo "$GIST_MAPPING" | jq -r '."'"$FILENAME"'"')
           echo "::set-output name=gist-id::$GIST_ID"
       
-      - name: Set filename with underscores
-        id: set-filename-with-underscores
+
+      - name: Set filename without path
+        id: set-filename-without-path
         run: |
           FILENAME="${{ steps.extract-file.outputs.filename }}"
-          FILENAME_WITH_UNDERSCORES=$(echo $FILENAME | sed 's/\//_/g')
-          echo "::set-output name=filename-with-underscores::$FILENAME_WITH_UNDERSCORES"
+          FILENAME_WITHOUT_PATH=$(basename "$FILENAME")
+          echo "::set-output name=filename-without-path::$FILENAME_WITHOUT_PATH"
+
 
       - name: Sync with Gist
         uses: popsiclestick/gist-sync-action@v1.2.0
