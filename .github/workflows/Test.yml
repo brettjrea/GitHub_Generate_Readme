@@ -66,3 +66,4 @@ jobs:
           gist_title: ${{ steps.extract-file.outputs.filename }}
           gist_description: ${{ steps.extract-file.outputs.filename }}
           github_file: ${{ steps.extract-file.outputs.filename }}
+          overwrite: true
