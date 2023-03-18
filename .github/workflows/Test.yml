@@ -56,7 +56,7 @@ jobs:
       - name: Sync with Gist
         uses: popsiclestick/gist-sync-action@v1.2.0
         with:
-          auth: ${{ secrets.GIST_TOKEN }}
+          auth: ${{ secrets.GIST_SYNC_TOKEN }}
           gist_url: "https://gist.githubusercontent.com/${{ steps.extract-repo.outputs.repository }}/${{ env.GIST_MAPPING[steps.extract-file.outputs.filename] }}"
           gist_title: ${{ steps.extract-file.outputs.filename }}
           gist_description: ${{ steps.extract-file.outputs.filename }}
