@@ -52,20 +52,7 @@ jobs:
           REPO=$(echo "$REPOSITORY_MAPPING" | jq -r '."'"$FILENAME"'"')
           echo "::set-output name=repository::$REPO"
 
-      - name: Update Gist with modified content
-        env:
-          GH_TOKEN: ${{ secrets.GIST_UPDATE_TOKEN }}
-        run: |
-          FILENAME="${{ steps.extract-file.outputs.filename }}"
-          GIST_FILENAME=$(basename "$FILENAME")
-          GIST_ID=$(echo "$GIST_MAPPING" | jq -r '."'"$FILENAME"'"')
-          CONTENT=$(cat "$FILENAME")
-          echo "Updating Gist $GIST_ID with the content of $FILENAME"
-          export GITHUB_TOKEN=$GH_TOKEN
-          TEMP_FILE=$(mktemp)
-          echo "$CONTENT" > "$TEMP_FILE"
-          gh gist edit "$GIST_ID" --filename "$GIST_FILENAME" --file "$TEMP_FILE"
-          rm "$TEMP_FILE"
+
 
 
 
