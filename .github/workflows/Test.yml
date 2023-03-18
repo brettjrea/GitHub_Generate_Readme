@@ -57,13 +57,21 @@ jobs:
           repository: ${{ steps.extract-repo.outputs.repository }}
           event-type: file-changed
           client-payload: '{ "message": "A bash script was modified" }'
+      
+      - name: Set filename with underscores
+        id: set-filename-with-underscores
+        run: |
+          FILENAME="${{ steps.extract-file.outputs.filename }}"
+          FILENAME_WITH_UNDERSCORES=$(echo $FILENAME | sed 's/\//_/g')
+          echo "::set-output name=filename-with-underscores::$FILENAME_WITH_UNDERSCORES"
+
 
       - name: Sync with Gist
         uses: popsiclestick/gist-sync-action@v1.2.0
         with:
           auth: ${{ secrets.GIST_SYNC_TOKEN }}
           gist_url: "https://gist.github.com/brettjrea/${{ steps.extract-gist-id.outputs.gist-id }}"
-          gist_title: ${{ steps.extract-file.outputs.filename }}
+          gist_title: ${{ steps.set-filename-with-underscores.outputs.filename-with-underscores }}
           gist_description: ${{ steps.extract-file.outputs.filename }}
           github_file: ${{ steps.extract-file.outputs.filename }}
           overwrite: true
