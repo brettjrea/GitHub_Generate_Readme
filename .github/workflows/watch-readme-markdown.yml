@@ -67,10 +67,10 @@ jobs:
           toc=$(cat readme/generate-readme-table-of-contents.md)
           config=$(cat readme/github-generate-readme.md)
           readme="$(echo -e "${toc}\n---\n${config}")"
-          echo "${readme}" > README.md
+          echo "${readme}" > Readme.md
 
       - name: Auto commit
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: 'Auto commit updated README.md'
-          file_pattern: 'README.md'
+          commit_message: 'Auto commit updated Readme.md'
+          file_pattern: 'Readme.md'
