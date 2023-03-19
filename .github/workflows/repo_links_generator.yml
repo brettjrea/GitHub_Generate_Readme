@@ -26,21 +26,21 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python -c '
-import os
-from github import Github
+      import os
+      from github import Github
 
-token = os.getenv("GITHUB_TOKEN")
-username = os.getenv("GITHUB_ACTOR")
+      token = os.getenv("GITHUB_TOKEN")
+      username = os.getenv("GITHUB_ACTOR")
 
-gh = Github(token)
-user = gh.get_user(username)
+      gh = Github(token)
+      user = gh.get_user(username)
 
-repos = [repo.html_url for repo in user.get_repos()]
+      repos = [repo.html_url for repo in user.get_repos()]
 
-with open("out/repo_links.txt", "w") as file:
-    for link in repos:
-        file.write(f"{link}\n")
-'
+      with open("out/repo_links.txt", "w") as file:
+          for link in repos:
+              file.write(f"{link}\n")
+      '
 
       - name: Create 'out' folder
         run: |
