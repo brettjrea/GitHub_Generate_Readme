@@ -12,12 +12,14 @@ env:
   REPOSITORY_MAPPING: >-
     {
     "bash/debian-bullseye-upgrade-script.sh": "brettjrea/Debian_Bullseye_Upgrade_Script",
-    "bash/ubuntu-jammy-upgrade-script.sh": "brettjrea/Ubuntu_Jammy_Upgrade_Script"
+    "bash/ubuntu-jammy-upgrade-script.sh": "brettjrea/Ubuntu_Jammy_Upgrade_Script",
+    "bash/install-nvm.sh": "brettjrea/Debian_Install_NVM"
     }
   GIST_MAPPING: >-
     {
     "bash/debian-bullseye-upgrade-script.sh": "9ac25d27f568138c0f505b0d83dfdfa5",
-    "bash/ubuntu-jammy-upgrade-script.sh": "e31a45b3818a2750f39625e620824d47"
+    "bash/ubuntu-jammy-upgrade-script.sh": "e31a45b3818a2750f39625e620824d47",
+    "bash/install-nvm.sh": "e566a998d102ea2c2b8220c9c585e438"
     }
 
 jobs:
