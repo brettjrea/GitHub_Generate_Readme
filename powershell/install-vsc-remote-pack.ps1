@@ -7,4 +7,3 @@ Start-Process -FilePath $vscodeInstallerPath -ArgumentList "/VERYSILENT /NORESTA
 # Install Remote Development (extension pack)
 $remoteDevelopmentExtensionPack = "ms-vscode-remote.vscode-remote-extensionpack"
 code --install-extension $remoteDevelopmentExtensionPack
-test
