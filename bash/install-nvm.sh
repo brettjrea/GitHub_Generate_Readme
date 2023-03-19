@@ -29,3 +29,4 @@ echo "export PATH=\"\$NVM_DIR/versions/node/\$(nvm version)/bin:\$PATH\"" >> ~/.
 # Reload the shell to apply the PATH changes
 
 exec bash
+test
