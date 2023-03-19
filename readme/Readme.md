@@ -1,1 +1,9 @@
-The “README” folder in this repository contains important information on how to use and interact with the code in this repository. The README files in this folder are automatically synced to the repository and provide a comprehensive guide on how to install and use the code. They include information on what the code does, how to set it up, and how to get started using it. By following the instructions provided in the README files, you can quickly get up and running with the code and begin using it in your own projects. These README files can also help other developers understand the purpose and functionality of the repository and can facilitate collaboration on the project.
+### README Source Folder
+
+The “README” folder in this repository contains important information on how to use and interact with the code in my repositories. These README files are automatically synced to other repositories and provide a comprehensive guide on how to install and use the code. They include information on what the code does, how to set it up, and how to get started using it.
+
+By following the instructions provided in the README files, you can quickly get up and running with the code and begin using it in your own projects. These README files can also help other developers understand the purpose and functionality of the repository and can facilitate collaboration on the project.
+
+Please note that these README files in the “README” folder sync to other repositories. 
+
+This ensures that the documentation is clear and concise across all repositories.
