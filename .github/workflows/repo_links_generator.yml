@@ -1,0 +1,55 @@
+name: Repository Links Generator
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate_links:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyGithub
+
+      - name: Generate repository links
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python -c '
+import os
+from github import Github
+
+token = os.getenv("GITHUB_TOKEN")
+username = os.getenv("GITHUB_ACTOR")
+
+gh = Github(token)
+user = gh.get_user(username)
+
+repos = [repo.html_url for repo in user.get_repos()]
+
+with open("out/repo_links.txt", "w") as file:
+    for link in repos:
+        file.write(f"{link}\n")
+'
+
+      - name: Create 'out' folder
+        run: |
+          mkdir -p out
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add out/repo_links.txt
+          git commit -m "Update repository links" || echo "No changes to commit"
+          git push
