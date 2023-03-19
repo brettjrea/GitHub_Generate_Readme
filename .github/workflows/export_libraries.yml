@@ -1,0 +1,17 @@
+name: Export Libraries
+on:
+  workflow_dispatch:
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Export libraries
+        run: |
+          find . -type f \( -iname "*.js" -o -iname "*.ts" \) -exec grep -H "^import.*from" {} \; | sed -e "s/.*\/\(.*\)\.js.*/\1/" -e "s/.*\/\(.*\)\.ts.*/\1/" | sort -u > libraries.txt
+      - name: Save output
+        uses: actions/upload-artifact@v2
+        with:
+          name: libraries
+          path: libraries.txt
