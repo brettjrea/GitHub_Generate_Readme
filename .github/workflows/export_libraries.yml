@@ -1,3 +1,4 @@
+# Replace ${{ secrets.REPO_ACCESS_TOKEN }} with the access token that you created in the repository settings.
 name: List Public Repositories
 on:
   workflow_dispatch:
