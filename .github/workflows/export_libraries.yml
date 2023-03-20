@@ -1,5 +1,4 @@
-# Replace ${{ secrets.REPO_ACCESS_TOKEN }} with the access token that you created in the repository settings.
-name: List Public Repositories
+name: List Public Repositories and Commit.
 on:
   workflow_dispatch:
 
@@ -11,6 +10,8 @@ jobs:
       run: gh repo clone ${{ github.repository }} ${{ github.repository }}
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
+        # Replace ${{ secrets.REPO_ACCESS_TOKEN }} with the access token that you created in the repository settings.
+
     - name: Create out directory
       run: mkdir -p ${{ github.repository }}/out
     - name: List Repositories
@@ -18,6 +19,8 @@ jobs:
         curl -s https://api.github.com/users/${{ github.actor }}/repos | jq '.[].name' > ${{ github.repository }}/out/repo_list.txt
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
+        # Replace ${{ secrets.REPO_ACCESS_TOKEN }} with the access token that you created in the repository settings.
+
     - name: Commit Changes
       run: |
         cd ${{ github.repository }}
@@ -28,3 +31,5 @@ jobs:
         git push --force origin HEAD:${{ github.ref }}
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
+        # Replace ${{ secrets.REPO_ACCESS_TOKEN }} with the access token that you created in the repository settings.
+ 
