@@ -7,12 +7,12 @@ jobs:
     steps:
     - name: Checkout Repository
       run: |
-        gh repo clone ${{ github.repository }} $GITHUB_WORKSPACE/repo
+        gh repo clone ${{ github.repository }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Create out directory
       run: |
-        cd $GITHUB_WORKSPACE/repo
+        cd ${{ github.repository }}
         mkdir -p out
       working-directory: $GITHUB_WORKSPACE
     - name: List Repositories
