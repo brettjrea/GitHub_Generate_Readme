@@ -1,5 +1,4 @@
 name: List Public Repositories
-
 on:
   workflow_dispatch:
 
@@ -8,26 +7,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
-      run: |
-        gh repo clone ${{ github.repository }}
+      run: gh repo clone brettjrea/GitHub_Generate_Readme ${{ github.workspace }}/GitHub_Generate_Readme
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Create out directory
-      run: |
-        cd ${{ github.repository }}
-        mkdir -p out
+      run: mkdir -p ${{ github.workspace }}/GitHub_Generate_Readme/out
     - name: List Repositories
       run: |
-        curl -s https://api.github.com/users/${{ github.actor }}/repos | jq '.[].name' > out/repo_list.txt
-      working-directory: ${{ github.repository }}
+        curl -s https://api.github.com/users/${{ github.actor }}/repos | jq '.[].name' > ${{ github.workspace }}/GitHub_Generate_Readme/out/repo_list.txt
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Commit Changes
       run: |
-        cd ${{ github.repository }}
+        cd ${{ github.workspace }}/GitHub_Generate_Readme
         git config --local user.name "${{ github.actor }}"
         git config --local user.email "${{ github.actor }}@users.noreply.github.com"
         git add out/repo_list.txt
         git commit -m "Added repo_list.txt"
         git push
-      working-directory: ${{ github.repository }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
