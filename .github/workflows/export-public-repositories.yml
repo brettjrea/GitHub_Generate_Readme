@@ -1,4 +1,4 @@
-name: List Public Repositories and Commit.
+name: Export Public Repositories.
 on:
   workflow_dispatch:
 
