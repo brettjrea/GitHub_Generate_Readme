@@ -1,17 +1,21 @@
-name: Export Libraries
+name: List Public Repositories
 on:
   workflow_dispatch:
 jobs:
-  export:
+  list-repos:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Export libraries
-        run: |
-          find . -type f \( -iname "*.js" -o -iname "*.ts" \) -exec grep -H "^import.*from" {} \; | sed -e "s/.*\/\(.*\)\.js.*/\1/" -e "s/.*\/\(.*\)\.ts.*/\1/" | sort -u > libraries.txt
-      - name: Save output
-        uses: actions/upload-artifact@v2
-        with:
-          name: libraries
-          path: libraries.txt
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+    - name: List Repositories
+      run: |
+        curl -s https://api.github.com/users/brettjrea/repos | jq '.[].name' > repo_list.txt
+    - name: Display Repositories
+      run: |
+        echo "Public Repositories:"
+        cat repo_list.txt
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: repo-list
+        path: repo_list.txt
