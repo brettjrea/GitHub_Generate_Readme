@@ -1,0 +1,21 @@
+name: Remove Failed Runs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  remove-failed-runs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Remove failed runs
+        run: |
+          gh run list --json status,conclusion --workflow $GITHUB_WORKFLOW_NAME \
+            | jq -r '.[] | select(.status=="completed" and .conclusion=="failure") | .id' \
+            | xargs -I {} gh run cancel {} --force \
+            && \
+          gh run list --json status,conclusion --workflow $GITHUB_WORKFLOW_NAME \
+            | jq -r '.[] | select(.status=="completed" and .conclusion=="failure") | .id' \
+            | xargs -I {} gh run delete {} --force
