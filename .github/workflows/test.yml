@@ -16,7 +16,7 @@ jobs:
       run: mkdir -p ${{ github.repository }}/out
     - name: List Repositories
       run: |
-        gh repo list --visibility=public --limit 100 --limit 100 --jq '.[].name' > ${{ github.repository }}/out/repo_list.txt
+        gh repo list --visibility=public --limit 100 --limit 100 --json name --jq '.[].name' > ${{ github.repository }}/out/repo_list.txt
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
         # Replace ${{ secrets.REPO_ACCESS_TOKEN }} with the access token that you created in the repository settings.
