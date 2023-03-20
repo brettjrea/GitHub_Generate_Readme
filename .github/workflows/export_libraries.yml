@@ -14,7 +14,6 @@ jobs:
       run: |
         cd ${{ github.repository }}
         mkdir -p out
-      working-directory: $GITHUB_WORKSPACE
     - name: List Repositories
       run: |
         curl -s https://api.github.com/users/${{ github.actor }}/repos | jq '.[].name' > repo/out/repo_list.txt
