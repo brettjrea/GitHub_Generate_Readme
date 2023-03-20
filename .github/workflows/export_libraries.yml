@@ -13,7 +13,14 @@ jobs:
     - name: List Repositories
       run: |
         curl -s https://api.github.com/users/${{ github.actor }}/repos | jq '.[].name' > $GITHUB_WORKSPACE/out/repo_list.txt
-    - name: Display Repositories
-      run: |
-        echo "Public Repositories:"
-        cat $GITHUB_WORKSPACE/out/repo_list.txt
+    - name: Commit Changes
+      uses: elstudio/actions-git-commit@v2.5.0
+      with:
+        branch: ${{ github.ref }}
+        message: "Added repo_list.txt"
+        files: |
+          out/repo_list.txt
+        name: ${{ github.actor }}
+        email: ${{ github.actor }}@users.noreply.github.com
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
