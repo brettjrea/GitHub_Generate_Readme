@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: List Repositories
       run: |
         curl -s https://api.github.com/users/brettjrea/repos | jq '.[].name' > repo_list.txt
@@ -15,7 +15,7 @@ jobs:
         echo "Public Repositories:"
         cat repo_list.txt
     - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: repo-list
         path: repo_list.txt
