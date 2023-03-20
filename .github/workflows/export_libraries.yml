@@ -9,14 +9,14 @@ jobs:
     - name: Checkout Repository
       run: gh repo clone ${{ github.repository }} ${{ github.repository }}
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
     - name: Create out directory
       run: mkdir -p ${{ github.repository }}/out
     - name: List Repositories
       run: |
         curl -s https://api.github.com/users/${{ github.actor }}/repos | jq '.[].name' > ${{ github.repository }}/out/repo_list.txt
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
     - name: Commit Changes
       run: |
         cd ${{ github.repository }}
@@ -26,4 +26,4 @@ jobs:
         git commit -m "Added repo_list.txt"
         git push
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
