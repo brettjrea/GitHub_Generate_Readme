@@ -6,7 +6,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
+    - name: Create out directory
+      run: |
+        mkdir -p $GITHUB_WORKSPACE/out
     - name: List Repositories
       run: |
         curl -s https://api.github.com/users/${{ github.actor }}/repos | jq '.[].name' > $GITHUB_WORKSPACE/out/repo_list.txt
