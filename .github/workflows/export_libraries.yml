@@ -16,7 +16,7 @@ jobs:
       run: mkdir -p ${{ github.repository }}/out
     - name: List Repositories
       run: |
-        curl -s https://api.github.com/users/${{ github.actor }}/repos | jq '.[].name' > ${{ github.repository }}/out/public_repo_list.txt
+        curl -s https://api.github.com/users/${{ github.actor }}/repos | jq '.[].name' > ${{ github.repository }}/out/repo_list.txt
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
         # Replace ${{ secrets.REPO_ACCESS_TOKEN }} with the access token that you created in the repository settings.
@@ -26,8 +26,8 @@ jobs:
         cd ${{ github.repository }}
         git config --local user.name "${{ github.actor }}"
         git config --local user.email "${{ github.actor }}@users.noreply.github.com"
-        git add out/public_repo_list.txt
-        git commit -m "Added public_repo_list.txt"
+        git add out/repo_list.txt
+        git commit -m "Added repo_list.txt"
         git push --force origin HEAD:${{ github.ref }}
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
