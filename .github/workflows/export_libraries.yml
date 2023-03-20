@@ -24,6 +24,6 @@ jobs:
         git config --local user.email "${{ github.actor }}@users.noreply.github.com"
         git add out/repo_list.txt
         git commit -m "Added repo_list.txt"
-        git push origin HEAD:${{ github.ref }}
+        git push --force origin HEAD:${{ github.ref }}
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
