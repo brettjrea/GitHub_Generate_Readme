@@ -9,13 +9,8 @@ jobs:
       uses: actions/checkout@v3
     - name: List Repositories
       run: |
-        curl -s https://api.github.com/users/${{ github.actor }}/repos | jq '.[].name' > repo_list.txt
+        curl -s https://api.github.com/users/${{ github.actor }}/repos | jq '.[].name' > $GITHUB_WORKSPACE/out/repo_list.txt
     - name: Display Repositories
       run: |
         echo "Public Repositories:"
-        cat repo_list.txt
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: repo-list
-        path: repo_list.txt
+        cat $GITHUB_WORKSPACE/out/repo_list.txt
