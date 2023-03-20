@@ -16,7 +16,7 @@ jobs:
       run: mkdir -p ${{ github.repository }}/out
     - name: List Repositories
       run: |
-        curl -s "https://api.github.com/users/${{ github.actor }}/repos?type=all" | jq '.[].name' > ${{ github.repository }}/out/repo_list.txt
+        curl -s https://api.github.com/users/${{ github.actor }}/repos | jq '.[].name' > ${{ github.repository }}/out/repo_list.txt
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
         # Replace ${{ secrets.REPO_ACCESS_TOKEN }} with the access token that you created in the repository settings.
@@ -32,4 +32,3 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
         # Replace ${{ secrets.REPO_ACCESS_TOKEN }} with the access token that you created in the repository settings.
- 
