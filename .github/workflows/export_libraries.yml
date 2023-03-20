@@ -6,21 +6,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v2
+      run: |
+        gh repo clone ${{ github.repository }} $GITHUB_WORKSPACE/repo
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Create out directory
       run: |
-        mkdir -p $GITHUB_WORKSPACE/out
+        mkdir -p $GITHUB_WORKSPACE/repo/out
     - name: List Repositories
       run: |
-        curl -s https://api.github.com/users/${{ github.actor }}/repos | jq '.[].name' > $GITHUB_WORKSPACE/out/repo_list.txt
+        curl -s https://api.github.com/users/${{ github.actor }}/repos | jq '.[].name' > $GITHUB_WORKSPACE/repo/out/repo_list.txt
     - name: Commit Changes
-      uses: elstudio/actions-git-commit@v2.5.0
-      with:
-        branch: ${{ github.ref }}
-        message: "Added repo_list.txt"
-        files: |
-          out/repo_list.txt
-        name: ${{ github.actor }}
-        email: ${{ github.actor }}@users.noreply.github.com
+      run: |
+        cd $GITHUB_WORKSPACE/repo
+        gh config set user.name "${{ github.actor }}"
+        gh config set user.email "${{ github.actor }}@users.noreply.github.com"
+        gh add out/repo_list.txt
+        gh commit -m "Added repo_list.txt"
+        gh push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
