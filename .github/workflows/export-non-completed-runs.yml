@@ -1,4 +1,4 @@
-name: List Non-Completed Workflow Runs
+name: Export Non-Completed Workflow Runs
 
 on:
   workflow_dispatch:
