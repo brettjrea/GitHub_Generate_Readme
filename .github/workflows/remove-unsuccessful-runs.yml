@@ -1,4 +1,4 @@
-name: Remove Failed Runs
+name: Remove Unsuccessful Runs
 
 on:
   workflow_dispatch:
