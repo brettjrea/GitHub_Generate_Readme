@@ -1,0 +1,19 @@
+name: Squash Test branch
+
+on:
+  workflow_dispatch:
+
+jobs:
+  squash:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ref: Test
+      - name: Squash commits
+        run: |
+          git checkout Test
+          git merge --squash $(git merge-base Test HEAD)
+          git commit -m "Squashed commits"
+          git push -f origin Test
