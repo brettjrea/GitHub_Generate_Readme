@@ -1,4 +1,4 @@
-name: List Non-Failed Workflow Runs
+name: Export Non-Failed Workflow Runs
 
 on:
   workflow_dispatch:
