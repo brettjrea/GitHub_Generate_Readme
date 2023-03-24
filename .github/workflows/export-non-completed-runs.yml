@@ -1,0 +1,40 @@
+name: Export Non-Completed Workflow Runs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  list-non-completed-runs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      run: gh repo clone ${{ github.repository }} ${{ github.repository }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
+        # Replace ${{ secrets.REPO_ACCESS_TOKEN }} with the access token that you created in the repository settings.
+
+
+    - name: List non-completed workflow runs and save to file
+      run: |
+        mkdir -p out
+        page=1
+        echo "ID,Status,Conclusion,Workflow Name" > out/non_completed_runs.txt
+        while : ; do
+          response=$(gh api -X GET "/repos/$GITHUB_REPOSITORY/actions/runs?per_page=100&page=$page")
+          if [ -z "$(echo "$response" | jq -r '.workflow_runs[]')" ]; then
+            break
+          fi
+          echo "$response" | jq -r '.workflow_runs[] | select(.status != "completed") | [.id, .status, .conclusion, .name] | @tsv' >> out/non_completed_runs.txt
+          page=$((page+1))
+        done
+      env:
+        GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
+
+    - name: Commit and push the non-completed runs file
+      run: |
+        cd ${{ github.repository }}
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add out/non_completed_runs.txt
+        git commit -m "Add non-completed runs list" -a || echo "No changes to commit"
+        git push || echo "No changes to push"

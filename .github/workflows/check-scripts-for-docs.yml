@@ -1,0 +1,59 @@
+name: Missing markdown
+on:
+  workflow_dispatch:
+
+jobs:
+  find_old_files:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        script_file_type: [sh, ps1]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Pair scripts without corresponding Markdown files
+      run: |
+        # Loop through each file type in the matrix and pair the corresponding files
+        for script_type in ${{ matrix.script_file_type }}; do
+          # Create the output directories if they don't exist
+          mkdir -p out
+
+          # Initialize the output files
+          output_file="${{ github.workspace }}/out/missing_markdown_files_$script_type.md"
+          echo "#### List of .$script_type files without corresponding Markdown files" > "$output_file"
+
+          # Find all script files and store them in a temporary file
+          find . -type f -name "*.$script_type" > script_files_temp.txt
+
+          # Pair script files with corresponding .md files and write them to the output file
+          while read -r script_file; do
+            base_name=$(basename "$script_file" .$script_type)
+            md_file=$(find . -type f -iname "$base_name.md")
+            if [[ -z "$md_file" ]]; then
+              echo "- [$base_name.$script_type]($script_file)" >> "$output_file"
+            fi
+          done < script_files_temp.txt
+        done
+
+    - name: Stash changes
+      run: git stash
+
+    - name: Fetch and rebase
+      run: |
+        git fetch origin main
+        git rebase origin/main
+
+    - name: Apply stash
+      run: git stash apply
+
+    - name: Commit and push changes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "Update missing_markdown_files.md with script files"
+        file_pattern: "out/**/*.md"
+        branch: main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,32 @@
+name: Remove Successful Runs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  remove-successful-runs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      run: gh repo clone ${{ github.repository }} ${{ github.repository }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
+        # Replace ${{ secrets.REPO_ACCESS_TOKEN }} with the access token that you created in the repository settings.
+
+    - name: Remove successful runs
+      run: |
+        page=1
+        while : ; do
+          response=$(gh api -X GET "/repos/$GITHUB_REPOSITORY/actions/runs?status=completed&per_page=100&page=$page")
+          if [ -z "$(echo "$response" | jq -r '.workflow_runs[]')" ]; then
+            break
+          fi
+          successful_runs_ids=$(echo "$response" | jq -r '.workflow_runs[] | select(.conclusion == "success") | .id')
+          if [ -n "$successful_runs_ids" ]; then
+            echo "$successful_runs_ids" | xargs -I {} gh api -X DELETE "/repos/$GITHUB_REPOSITORY/actions/runs/{}"
+          fi
+          page=$((page+1))
+        done
+      env:
+        GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
+        # Replace ${{ secrets.REPO_ACCESS_TOKEN }} with the access token that you created in the repository settings.

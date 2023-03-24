@@ -1,0 +1,41 @@
+# Set VM Name, Switch Name, and Installation Media Path.
+$VMName = 'ubuntu'
+$Switch = 'Bridged Virtual Switch'
+$InstallMedia = 'C:\Users\user\OneDrive\HyperV\ISO\mini.iso'
+$VHDX = "C:\Users\user\OneDrive\HyperV\VHD\$VMName.vhdx"
+
+#Create New Virtual Switch
+New-VMSwitch -Name $Switch -AllowManagementOS $true -NetAdapterName 'wi-fi'
+
+# Create New Virtual Machine
+New-VM -Name $VMName -SwitchName $Switch -Generation 2
+
+#Configure Virtual Hardware
+Set-VM -Name $VMName -ProcessorCount 2 -DynamicMemory -MemoryMaximumBytes 2GB
+
+#Add SCSI Controller
+Add-VMScsiController -VMName $VMName
+
+#Configure Virtual Harddisk
+New-VHD -path $VHDX -SizeBytes 8GB -Dynamic -BlockSizeBytes 1MB
+
+#Mount Virtual Harddisk to Virtual Machine
+Get-VM $VMName | Add-VMHardDiskDrive -ControllerType SCSI -ControllerNumber 0 -ControllerLocation 0 -path $VHDX
+
+#Add DVD Drive
+Get-VM $VMName | Add-VMDvdDrive -ControllerNumber 1 -ControllerLocation 1 -Path $InstallMedia
+
+# Mount Installation Media
+$DVDDrive = Get-VMDvdDrive -VMName $VMName
+
+# Configure Virtual Machine to Boot from DVD, Enable Secure Boot, and UEFI template. 
+Set-VMFirmware $VMName -FirstBootDevice $DVDDrive -EnableSecureBoot On -SecureBootTemplate MicrosoftUEFICertificateAuthority 
+
+#Enable Integration Services
+Get-VM $VMName | Enable-VMIntegrationService 'Guest Service Interface'
+
+#StartVM
+Start-VM $VMName
+
+# Open up VMConnect
+Invoke-Expression "vmconnect.exe localhost `"$VMName`""

@@ -1,0 +1,35 @@
+name: Export Public Repositories.
+on:
+  workflow_dispatch:
+
+jobs:
+  list-repos:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      run: gh repo clone ${{ github.repository }} ${{ github.repository }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
+        # Replace ${{ secrets.REPO_ACCESS_TOKEN }} with the access token that you created in the repository settings.
+
+    - name: Create out directory
+      run: mkdir -p ${{ github.repository }}/out
+    - name: List Repositories
+      run: |
+        gh repo list --visibility=public --limit 100 --json name,url --jq '.[] | "- [\(.name)](\(.url))"' | sort > ${{ github.repository }}/out/public_repo_list.md
+      env:
+        GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
+        # Replace ${{ secrets.REPO_ACCESS_TOKEN }} with the access token that you created in the repository settings.
+
+    - name: Commit Changes
+      run: |
+        cd ${{ github.repository }}
+        git config --local user.name "${{ github.actor }}"
+        git config --local user.email "${{ github.actor }}@users.noreply.github.com"
+        git add out/public_repo_list.md
+        git commit -m "Added public_repo_list.md"
+        git push "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:${{ github.ref }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
+        # Replace ${{ secrets.REPO_ACCESS_TOKEN }} with the access token that you created in the repository settings.
+ 

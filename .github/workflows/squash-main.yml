@@ -1,0 +1,31 @@
+name: Squash Commits in Main Branch
+
+on:
+  workflow_dispatch:
+
+jobs:
+  squash_commits:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        ref: main
+        fetch-depth: 0
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+
+    - name: Configure Git
+      run: |
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions"
+
+    - name: Squash all commits
+      run: |
+        git checkout -b temp_squash_branch
+        git reset $(git commit-tree HEAD^{tree} -m "Squash all commits into a single commit")
+        git branch -M temp_squash_branch main
+
+    - name: Push changes
+      run: |
+        git push --force --set-upstream origin main

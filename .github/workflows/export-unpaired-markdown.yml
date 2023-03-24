@@ -1,0 +1,59 @@
+name: List Unpaired Markdown Old Files
+
+on:
+  workflow_dispatch:
+
+jobs:
+  find_old_files:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Find unpaired .md.old files
+      run: |
+        # Create the output directory if it doesn't exist
+        mkdir -p out/unpaired
+
+        # Initialize the output file
+        unpaired_output_file="${{ github.workspace }}/out/unpaired/unpaired_md_old_files.md"
+        echo "#### List of unpaired .md.old files" > "$unpaired_output_file"
+
+        # Find all .md.old files and store them in a temporary file
+        find . -type f -name "*.md.old" > md_old_files_temp.txt
+
+        # Add this line to verify that the correct files are being found
+        find . -type f -name "*.md.old"
+
+        # Check if the .md.old files have a corresponding .sh.old or .ps1.old file
+        while read -r md_old_file; do
+          base_name=$(basename "$md_old_file" .md.old)
+          sh_old_file=$(find . -type f -iname "$base_name.sh.old")
+          ps1_old_file=$(find . -type f -iname "$base_name.ps1.old")
+          if [[ -z "$sh_old_file" && -z "$ps1_old_file" ]]; then
+            echo "<a href=\"$md_old_file\">$md_old_file</a><br>" >> "$unpaired_output_file"
+            echo "" >> "$unpaired_output_file"
+          fi
+        done < md_old_files_temp.txt
+
+    - name: Stash changes
+      run: git stash
+
+    - name: Fetch and rebase
+      run: |
+        git fetch origin main
+        git rebase origin/main
+
+    - name: Apply stash
+      run: git stash apply
+
+    - name: Commit and push changes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "Update unpaired_md_old_files.md with unpaired .md.old files"
+        file_pattern: "out/unpaired/*.md"
+        branch: main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # Replace ${{ secrets.GITHUB_TOKEN }} with the personal access token that you created in the repository settings.

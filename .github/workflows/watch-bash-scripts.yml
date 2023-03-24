@@ -1,0 +1,94 @@
+name: Watch bash scripts
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'bash/**'
+  repository_dispatch:
+    types: [file-changed]
+
+env:
+  REPOSITORY_MAPPING: >-
+    {
+    "bash/debian-bullseye-upgrade-script.sh": "brettjrea/Debian_Bullseye_Upgrade_Script",
+    "bash/ubuntu-jammy-upgrade-script.sh": "brettjrea/Ubuntu_Jammy_Upgrade_Script",
+    "bash/install-nvm.sh": "brettjrea/Debian_Install_NVM",
+    "bash/install-nvs.sh": "brettjrea/Debian_Install_NVS",
+    "bash/install-tools.sh": "brettjrea/Debian_Install_Common_Build_Tools",
+    "bash/install-strapi.sh": "brettjrea/Debian_Strapi_Backend_API",
+    "bash/install-gatsby.sh": "brettjrea/Debian_Gatsby_Frontend_Client",
+    "bash/configure-pm2.sh": "brettjrea/Debian_Configure_PM2",
+    "bash/install-github-cli.sh": "brettjrea/Debian_Install_GitHub_CLI"
+    }
+  GIST_MAPPING: >-
+    {
+    "bash/debian-bullseye-upgrade-script.sh": "9ac25d27f568138c0f505b0d83dfdfa5",
+    "bash/ubuntu-jammy-upgrade-script.sh": "e31a45b3818a2750f39625e620824d47",
+    "bash/install-nvm.sh": "e566a998d102ea2c2b8220c9c585e438",
+    "bash/install-nvs.sh": "f4a2ba1a4d2f73c35fc72ef0db679f63",
+    "bash/install-tools.sh": "920436ed0bed2e7887b1a61f5c1e358f",
+    "bash/install-strapi.sh": "48409a9c4342914fa7e96f657ab8d7f4",
+    "bash/install-gatsby.sh": "ff4b85bf98ccb8f3134b13943d5aff1c",
+    "bash/configure-pm2.sh": "af9f8537229b490bcc1ab281827c13e2",
+    "bash/install-github-cli.sh": "540629e1f21f8d28f4124a20ce201666"
+    }
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+
+      - name: Extract file name
+        id: extract-file
+        run: |
+          MODIFIED_FILES=$(echo "${{ steps.changed-files.outputs.modified_files }}" | tr -d '\n')
+          FILENAME=$(echo "$MODIFIED_FILES" | head -n1)
+          echo "::set-output name=filename::$FILENAME"
+
+      - name: Extract repository name
+        id: extract-repo
+        run: |
+          FILENAME="${{ steps.extract-file.outputs.filename }}"
+          REPO=$(echo "$REPOSITORY_MAPPING" | jq -r '."'"$FILENAME"'"')
+          echo "::set-output name=repository::$REPO"
+
+      - name: Run a single dispatch step if a file was modified
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: ${{ steps.extract-repo.outputs.repository }}
+          event-type: file-changed
+          client-payload: '{ "message": "A bash script was modified" }'
+     
+      - name: Extract Gist ID
+        id: extract-gist-id
+        run: |
+          FILENAME="${{ steps.extract-file.outputs.filename }}"
+          GIST_ID=$(echo "$GIST_MAPPING" | jq -r '."'"$FILENAME"'"')
+          echo "::set-output name=gist-id::$GIST_ID"
+
+      - name: Set filename without path
+        id: set-filename-without-path
+        run: |
+          FILENAME="${{ steps.extract-file.outputs.filename }}"
+          FILENAME_WITHOUT_PATH=$(basename "$FILENAME")
+          echo "::set-output name=filename-without-path::$FILENAME_WITHOUT_PATH"
+
+      - name: Sync with Gist
+        uses: popsiclestick/gist-sync-action@v1.2.0
+        with:
+          auth: ${{ secrets.GIST_SYNC_TOKEN }}
+          gist_url: "https://gist.github.com/brettjrea/${{ steps.extract-gist-id.outputs.gist-id }}"
+          gist_title: ${{ steps.set-filename-without-path.outputs.filename-without-path }}
+          gist_description: ${{ steps.extract-file.outputs.filename-without-path }}
+          github_file: ${{ steps.extract-file.outputs.filename }}
+          overwrite: true
