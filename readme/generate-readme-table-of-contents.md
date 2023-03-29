@@ -57,7 +57,7 @@
   </details>
   
   <details>   
-  <summary>9. Add GitHub CLI:</summary> 
+  <summary>8. Add GitHub CLI:</summary> 
   
   1. [Install GitHub CLI](https://github.com/brettjrea/Debian_Install_GitHub_CLI)
   
