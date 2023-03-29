@@ -11,7 +11,8 @@ on:
 env:
   REPOSITORY_MAPPING: >-
     {
-    "readme/windows-install-wsl.md": "brettjrea/Windows_WSL_Debian",
+    "readme/windows-install-debian-wsl.md": "brettjrea/Windows_WSL_Debian",
+    "readme/windows-install-ubuntu-wsl.md": "brettjrea/Windows_WSL_Ubuntu",
     "readme/debian-bullseye-upgrade-script.md": "brettjrea/Debian_Bullseye_Upgrade_Script",
     "readme/ubuntu-jammy-upgrade-script.md": "brettjrea/Ubuntu_Jammy_Upgrade_Script",
     "readme/debian-install-nvm.md": "brettjrea/Debian_Install_NVM",
