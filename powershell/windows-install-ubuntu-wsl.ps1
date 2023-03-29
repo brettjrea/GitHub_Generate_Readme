@@ -16,7 +16,7 @@ Invoke-WebRequest -Uri https://aka.ms/wslubuntu -OutFile Ubuntu.appx -UseBasicPa
 Write-Host "Ubuntu is downloaded."
 
 # Step 4: Add Ubuntu package
-Add-AppxPackage .\Ubuntu.appx
+Add-AppxPackage .\ubuntu.appx
 Write-Host "Ubuntu package is added."
 
 # Step 5: Update WSL
