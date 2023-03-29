@@ -2,7 +2,8 @@
 
 1. Get Debian/Ubuntu:
    1. [Install WSL Debian on Windows](https://github.com/brettjrea/Windows_WSL_Debian)
-   2. [Install VSCode with Remote Pack on Windows](https://github.com/brettjrea/Windows_VSC_Remote_Pack)
+   2. [Install WSL Ubuntu on Windows](https://github.com/brettjrea/Windows_WSL_Ubuntu)
+   3. [Install VSCode with Remote Pack on Windows](https://github.com/brettjrea/Windows_VSC_Remote_Pack)
 
 2. Optional OS upgrades:
    1. [Upgrade Debian Bullseye to Buster](https://github.com/brettjrea/Debian_Bullseye_Upgrade_Script)
