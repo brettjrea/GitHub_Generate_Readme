@@ -1,3 +1,4 @@
+```
 # Step 1: Open Windows Powershell from powerusers menu
 Start-Process powershell -Verb runAs
 
@@ -24,3 +25,4 @@ wsl --update
 
 # Step 6: Start Debian
 ubuntu
+```
