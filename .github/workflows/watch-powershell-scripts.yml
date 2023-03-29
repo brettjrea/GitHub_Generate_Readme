@@ -11,12 +11,14 @@ on:
 env:
   REPOSITORY_MAPPING: >-
     {
-    "powershell/windows-install-wsl.ps1": "brettjrea/Windows_WSL_Debian",
+    "powershell/windows-install-debian-wsl.ps1": "brettjrea/Windows_WSL_Debian",
+    "powershell/windows-install-ubuntu-wsl.ps1": "brettjrea/Windows_WSL_Ubuntu",
     "powershell/install-vsc-remote-pack.ps1": "brettjrea/Windows_VSC_Remote_Pack"
     }
   GIST_MAPPING: >-
     {
-    "powershell/windows-install-wsl.ps1": "5da7ad9addfd0170a835872dc39bf376",
+    "powershell/windows-install-debian-wsl.ps1": "5da7ad9addfd0170a835872dc39bf376",
+    "powershell/windows-install-ubuntu-wsl.ps1": "d45436c19059f265a5c938dcc4b2eff3",
     "powershell/install-vsc-remote-pack.ps1": "a2e9f34da97b14950adca398540471e9"
     }
 
