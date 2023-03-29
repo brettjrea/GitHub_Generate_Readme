@@ -21,7 +21,8 @@
   </details>
   
   <details>
-  <summary>3. Node.js tools:</summary>  
+  <summary>3. Node.js tools:</summary>
+  
   1. [Install NVM](https://github.com/brettjrea/Debian_Install_NVM) - Node Version Manager
   
   2. [Install NVS](https://github.com/brettjrea/Debian_Install_NVS) - Node Version Switcher (added 02/23 it is a cross-platform node based successor/replacement for NVM)
