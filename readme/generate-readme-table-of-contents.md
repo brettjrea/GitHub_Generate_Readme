@@ -1,5 +1,6 @@
 #### Title: "Node.js and Build Tools Installation Guide with Optional OS Upgrades"
-
+<details>
+  <summary>Click for Table of Contents</summary>
 1. Get Debian/Ubuntu:
    1. [Install WSL Debian on Windows](https://github.com/brettjrea/Windows_WSL_Debian)
    2. [Install WSL Ubuntu on Windows](https://github.com/brettjrea/Windows_WSL_Ubuntu)
@@ -27,3 +28,4 @@
 
 9. Add GitHub CLI:
    1. [Install GitHub CLI](https://github.com/brettjrea/Debian_Install_GitHub_CLI)
+</details>
