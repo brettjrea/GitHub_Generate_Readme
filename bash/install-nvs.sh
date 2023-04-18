@@ -16,7 +16,7 @@ echo '[ -s "$NVS_HOME/nvs.sh" ] && . "$NVS_HOME/nvs.sh"  # This loads NVS' >> ~/
 export NVS_HOME="$HOME/.nvs"
 [ -s "$NVS_HOME/nvs.sh" ] && . "$NVS_HOME/nvs.sh"
 
-# install latest version of Node.js
+# install latest version of Node.js might need to use `source nvs.sh`
 nvs add lts
 nvs use lts
 
