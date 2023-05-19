@@ -2,6 +2,7 @@
 
 #### Install with Yarn: 
 *Originally wrote with NPM but had too many issues with the cache, but yarn worked fine. Moved those instructions to README_NPM.MD*
+
 ```
 sudo apt upgrade -y && sudo apt update -y && sudo apt autoremove -y &&
 npm install --global yarn &&
@@ -21,4 +22,5 @@ yarn add gatsby-source-custom-api
 ```
 cd my-frontend && yarn deploy
 ```
+
 I seperated the command to start development because I am using PM2 from the link above. ☝️
