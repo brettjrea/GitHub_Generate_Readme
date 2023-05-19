@@ -1,7 +1,7 @@
 ### Gatsby Typescript Styled Components
 
 #### Install with Yarn: 
-*Originally wrote with NPM but had too many issues with the cache, but yarn worked fine. Moved those instructions to README_NPM.MD*
+*Originally wrote with NPM but had too many issues with the cache, but yarn worked fine.
 
 ```
 sudo apt upgrade -y && sudo apt update -y && sudo apt autoremove -y &&
