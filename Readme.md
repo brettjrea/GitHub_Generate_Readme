@@ -17,6 +17,8 @@
   1. [Upgrade Debian Bullseye to Buster](https://github.com/brettjrea/Debian_Bullseye_Upgrade_Script)
   
   2. [Upgrade Ubuntu Focal to Jammy](https://github.com/brettjrea/Ubuntu_Jammy_Upgrade_Script)
+
+  3. [Install Nix package Manager](https://github.com/brettjrea/Debian_Install_Nix)
   
   </details>
   
