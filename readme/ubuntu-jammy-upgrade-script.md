@@ -9,9 +9,9 @@ sudo apt upgrade -y && sudo apt update -y && sudo apt autoremove -y &&
 sudo apt install wget -y &&
 sudo apt-get install --reinstall ca-certificates -y &&
 wget https://raw.githubusercontent.com/brettjrea/Scripts_Fix/master/fixscripts.sh &&
-wget https://raw.githubusercontent.com/brettjrea/Ubuntu_Jammy_Upgrade_Script/master/upgrade.sh &&
+wget https://raw.githubusercontent.com/brettjrea/Ubuntu_Jammy_Upgrade_Script/master/ubuntu-jammy-upgrade-script.sh &&
 sudo bash fixscripts.sh &&
-sudo bash upgrade.sh && 
+sudo bash ubuntu-jammy-upgrade-script.sh && 
 sudo apt autoremove -y &&
 sudo apt clean -y
 set -o emacs
