@@ -47,11 +47,11 @@ jobs:
 
           # Create upstream-main branch tracking upstream main branch
           git checkout -b upstream-main upstream/main
-          git push --set-upstream origin upstream-main
+          git push https://${{ secrets.REPO_ACCESS_TOKEN }}@github.com/${{ github.repository_owner }}/${{ env.new_repo_name }}.git upstream-main
 
           # Create main branch based on upstream-main
           git checkout -b main
-          git push --set-upstream origin main
+          git push https://${{ secrets.REPO_ACCESS_TOKEN }}@github.com/${{ github.repository_owner }}/${{ env.new_repo_name }}.git main
 
       - name: Setup Feature Branch
         run: |
@@ -63,7 +63,7 @@ jobs:
       - name: Push Feature Branch
         run: |
           cd upstream
-          git push --set-upstream origin ${random_branch}
+          git push https://${{ secrets.REPO_ACCESS_TOKEN }}@github.com/${{ github.repository_owner }}/${{ env.new_repo_name }}.git ${random_branch}
 
       - name: Output Details
         run: |
