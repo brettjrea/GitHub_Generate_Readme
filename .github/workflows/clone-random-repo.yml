@@ -51,8 +51,14 @@ jobs:
       - name: Push to New Repository
         run: |
           cd upstream
-          git remote add origin https://github.com/${{ github.repository_owner }}/$NEW_REPO_NAME.git
-          git push --set-upstream origin ${{ env.random_branch }}
+          # Check if the 'origin' remote already exists
+          if git remote | grep -q "^origin$"; then
+            git remote remove origin
+          fi
+          
+          # Add the new origin and push the branch
+          git remote add origin https://github.com/brettjrea/${new_repo_name}.git
+          git push --set-upstream origin ${random_branch}
 
       - name: Output Details
         run: |
