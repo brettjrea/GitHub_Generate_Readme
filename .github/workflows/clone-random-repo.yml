@@ -57,7 +57,7 @@ jobs:
           fi
           
           # Add the new origin and push the branch
-          git remote add origin https://github.com/brettjrea/${new_repo_name}.git
+          git remote add origin https://${{ secrets.REPO_ACCESS_TOKEN }}@github.com/brettjrea/${new_repo_name}.git
           git push --set-upstream origin ${random_branch}
 
       - name: Output Details
