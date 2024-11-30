@@ -50,7 +50,13 @@ jobs:
           git push https://${{ secrets.REPO_ACCESS_TOKEN }}@github.com/${{ github.repository_owner }}/${{ env.new_repo_name }}.git upstream-main
 
           # Create main branch based on upstream-main
-          git checkout -b main
+          if git show-ref --verify --quiet refs/heads/main; then
+              echo "Branch 'main' already exists. Skipping creation."
+          else
+              git checkout -b main
+              git push https://***@github.com/${{ github.repository }}.git main
+          fi
+
           git push https://${{ secrets.REPO_ACCESS_TOKEN }}@github.com/${{ github.repository_owner }}/${{ env.new_repo_name }}.git main
 
       - name: Setup Feature Branch
