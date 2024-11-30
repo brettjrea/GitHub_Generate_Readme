@@ -1,0 +1,60 @@
+name: Clone to Random Feature Branch
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo_url:
+        description: 'URL of the upstream repository to clone'
+        required: true
+
+jobs:
+  clone-random-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt update
+          sudo apt install gh -y
+
+      - name: Authenticate GitHub CLI
+        run: |
+          echo "${{ secrets.REPO_ACCESS_TOKEN }}" | gh auth login --with-token
+
+      - name: Create External Repository
+        id: create-repo
+        run: |
+          REPO_NAME=$(basename "${{ github.event.inputs.repo_url }}" .git)
+          RANDOM_SUFFIX=$(openssl rand -hex 4)
+          NEW_REPO_NAME="${REPO_NAME}-${RANDOM_SUFFIX}"
+          gh repo create "${NEW_REPO_NAME}" --public --clone
+          echo "new_repo_name=${NEW_REPO_NAME}" >> $GITHUB_ENV
+
+      - name: Clone Upstream Repository
+        run: |
+          git clone ${{ github.event.inputs.repo_url }} upstream
+          cd upstream
+
+      - name: Setup Branches
+        run: |
+          cd upstream
+          git remote add upstream ${{ github.event.inputs.repo_url }}
+          git remote set-url --push upstream no_push
+          git fetch upstream
+          RANDOM_BRANCH="feature-$(openssl rand -hex 4)"
+          git checkout -b "${RANDOM_BRANCH}"
+          echo "random_branch=${RANDOM_BRANCH}" >> $GITHUB_ENV
+
+      - name: Push to New Repository
+        run: |
+          cd upstream
+          git remote add origin https://github.com/${{ github.repository_owner }}/$NEW_REPO_NAME.git
+          git push --set-upstream origin ${{ env.random_branch }}
+
+      - name: Output Details
+        run: |
+          echo "New Repository Created: https://github.com/${{ github.repository_owner }}/${{ env.new_repo_name }}"
+          echo "Random Branch Created: ${{ env.random_branch }}"
