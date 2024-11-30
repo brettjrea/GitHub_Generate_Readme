@@ -1,4 +1,4 @@
-name: Clone to Random Feature Branch
+name: Clone to Random Repo and Feature Branch
 
 on:
   workflow_dispatch:
